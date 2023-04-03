@@ -1,0 +1,19 @@
+{
+  "name": "windows_service",
+  "version": "1.0.0",
+  "description": "manage windows service",
+  "main": "service_manage.js",
+  "scripts": {
+    "service-install": "node service_manage.js install",
+    "service-uninstall": "node service_manage.js uninstall",
+    "service-breath-install": "node service_breath_manage.js install",
+    "service-breath-uninstall": "node service_breath_manage.js uninstall",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-windows": "^1.0.0-beta.5",
+    "path": "^0.12.7"
+  }
+}

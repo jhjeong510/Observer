@@ -1,0 +1,31 @@
+.few_service_box {
+    width: 37.4vw;
+}
+
+.event_name_box {
+    width: 30%;
+    padding: 1.6rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
+}
+
+.unAck_percent {
+    position: relative;
+    top: -6.5vh;
+    left: 0%;
+    font-size: 1.1rem;
+}
+
+.unAck_label {
+    margin: auto;
+    white-space: nowrap;
+}
+
+.unAck_value {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.3rem;
+}

@@ -1,0 +1,144 @@
+.parking_status_table {
+	width: 100%;
+}
+
+.parking_status_all {
+	display: flex;
+    border-bottom: 1.5px solid #4e4e4e;
+    text-align: center;
+    border-image: linear-gradient(to right, #000000 0%, #aaa7a7, #000000 100%);
+    border-image-slice: 1;
+	margin: 15px 0px 10px 0px;
+	padding-bottom: 10px;
+}
+
+.type_detail_row {
+	display: flex;
+
+	padding-bottom: 3px;
+}
+
+.parking_type_label {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 4.5vh;
+	font-size: 1.2rem;
+	border-radius: 1rem;
+	margin: 0.5rem 1rem;
+	width: 60%;
+
+	box-shadow: inset 2px 2px 2px #00000085;
+    border: 1px solid #5f5f5f;	
+	text-shadow: 2.5px 2.5px 2px black;
+
+}
+
+.parking_type_label_all{
+	background-color: #474747;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 4.5vh;
+	font-size: 1.2rem;
+	border-radius: 1rem;
+	margin: 0.5rem 1rem;
+	width: 60%;
+
+	box-shadow: inset 2px 2px 2px #00000085;
+    border: 1px solid #5f5f5f;	
+	text-shadow: 2.5px 2.5px 2px black;
+}
+
+.parking_type_icon {
+	margin-right: 1rem;
+	text-shadow: 2.5px 2.5px 2px black;
+
+}
+
+.parking_type_text{
+	text-shadow: 2.5px 2.5px 2px black;
+}
+
+
+
+.occupancy_full {
+	 /* padding: 0.5rem; */
+	/* background-color: red;
+	border-radius: 0.5rem; */ 
+
+	/* width: 20%;
+    text-align: center;
+    color: #ebe6e6;
+    margin: 0.5rem 0.25rem;
+    font-size: 1.2rem; */
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+	width: 70.3px;
+	height: 48.59px;
+    text-shadow: 3px 3px 2px black;
+    border-radius: 0.42rem;
+    /* border: 1px solid transparent; */
+    background-image: linear-gradient(#b90000, #b90000), linear-gradient(316deg, #b7b7b7, #454545);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+} 
+
+.avail_count {
+	/* width: 20%;
+	background-color: #006927;
+	border-radius: 0.5rem;
+	text-align: center;
+	color: #ebe6e6;
+	margin: 0.5rem 0.25rem;
+	font-size: 1.2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center; */
+
+	width: 20%;
+    background-color: #004b1c;
+    text-align: center;
+    color: #ebe6e6;
+    margin: 0.5rem 0.25rem;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 3px 3px 2px black;
+    border-radius: 0.5rem;
+    border: 1px solid transparent;
+    background-image: linear-gradient(#004b1c, #004b1c), linear-gradient(316deg, #b7b7b7, #454545);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+}
+
+.total_count {
+	/* width: 20%;
+	background-color: #282828;
+	text-align: center;
+	border-radius: 0.5rem;
+	color: #ebe6e6 margin;
+	margin: 0.5rem 0.25rem;
+	font-size: 1.2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center; */
+
+
+    text-shadow: 3px 3px 2px black;
+    width: 20%;
+    text-align: center;
+    border-radius: 0.5rem;
+    color: #ebe6e6 margin;
+    margin: 0.5rem 0.25rem;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(#282828, #282828), linear-gradient(316deg, #b7b7b7, #454545);
+    border: 1px solid transparent;
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+}

@@ -1,0 +1,28 @@
+@keyframes blink {
+    50% {
+        background-color: transparent;
+    }
+}
+
+.onEvent {
+    z-index: 10000;
+    height: 180px;
+    width: 730px;
+    background-color: #9f3737;
+    animation: blink 1s;
+    animation-iteration-count: 30;
+}
+
+.unAck {
+    z-index: 10000;
+    height: 180px;
+    width: 730px;
+    background-color: #9f3737;
+}
+
+.normal {
+    z-index: 10000;
+    height: 180px;
+    width: 730px;
+    background-color: transparent;
+}

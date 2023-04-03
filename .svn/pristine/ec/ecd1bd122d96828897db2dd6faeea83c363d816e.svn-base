@@ -1,0 +1,116 @@
+.menu_eventList {
+	position: absolute;
+	padding: 8px;
+	width: 400px;
+	height: 305px;
+	background-color: rgb(48, 46, 46);
+	opacity: 0.95;
+	color: #222;
+	font-size: 13px;
+	border: 1px solid white;
+	border-radius: 8px;
+	border-width: 1px;
+}
+
+.parking_event {
+	width: 395px;
+	height: 86%;
+	overflow: auto;
+	position: 'relative';
+	color: 'white'
+}
+
+.parking_event::-webkit-scrollbar {
+	width: 13px;
+}
+
+.parking_event::-webkit-scrollbar-thumb {
+	background-color: #2f3542;
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.parking_event::-webkit-scrollbar-track {
+	background-color: grey;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+}
+
+.parking_event_icon_backgroundColor {
+	background-color: hsla(0, 100%, 50%, 0.5);
+}
+
+.eventInfo {
+	display: flex;
+	justify-content: space-around;
+	height: 100%;
+}
+
+.eventIcon {
+	display: flex;
+	align-items: center;
+	width: 15%;
+	justify-content: center;
+}
+
+.event_text_info {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 85%;
+}
+
+.event_text_info-detail {
+	display: flex;
+	flex-direction: column;
+	margin-top: -0.2rem;
+}
+
+h5.event_text_info_name {
+	display: flex;
+	margin: 5px 0 5px 0;
+	font-weight: bold;
+}
+
+span.event_text_info_description {
+	margin-top: -0.2rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100%;
+	display: flex;
+}
+
+span.event_text_info_occurTime {
+	margin-top: -0.2rem;
+	display: flex;
+}
+
+.eventList_header {
+	display: flex;
+	justify-content: space-between;
+}
+
+span.unAck_eventList_empty {
+	display: flex;
+	align-items: center;
+	color: darkgray;
+	justify-content: center;
+	height: 100%;
+	font-size: 1rem;
+	font-weight: bold;
+}
+
+.preview_item {
+	background-color: #e3e3e3;
+	margin-left: 4px;
+	margin-right: 4px;
+	border-bottom: 1px solid hsl(0, 0%, 20%);
+}
+
+h5.header {
+	color: white;
+	margin-left: 15px;
+	margin-top: 10px;
+}

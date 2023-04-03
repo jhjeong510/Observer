@@ -1,0 +1,144 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	text-align: center;
+}
+
+.wrap {
+	max-width: 75rem;
+	margin: 0;
+}
+
+h3 {
+	padding: 20px 0;
+	font-size: 30px;
+	color: #fff;
+}
+
+.cameras_box {
+	display: flex;
+	align-items: center;
+}
+
+.camArea {
+	/* padding: 60px; */
+	margin: 10px;
+	/* font-size: 20px; */
+	/* text-align: center; */
+}
+
+.camArea1 {
+	width: 560px;
+	height: 315px;
+	margin-top: 3.5rem;
+	max-height: 315px;
+}
+
+.camArea2 {
+	width: 560px;
+	height: 315px;
+	margin-top: 3.5rem;
+	max-height: 315px;
+}
+
+@media(min-width: 700px) {
+	.wrap {
+		display: flex;
+		height: 28rem;
+	}
+
+	.camArea_ {
+		flex: 1;
+	}
+}
+
+.loading {
+	position: relative;
+	top: 9.5vh;
+	left: 13vw;
+}
+
+
+.loading_large {
+	position: relative;
+	top: 30vh;
+	left: 28vw;
+}
+
+.video {
+	/* width: 30vw;
+	height: 33.4365322vh; */
+
+	width: 29vw;
+	height: 32.4365322vh;
+
+	/* width: 29.7vw;
+	height: 34vh; */
+	margin: auto;
+	box-shadow: 3px 3px 9px 4px black;
+	border-radius: 0.5rem;
+	border: 1.5px solid transparent;
+	background-origin: border-box;
+	background-clip: content-box, border-box;
+	background-image: linear-gradient(#000000, #000000), linear-gradient(316deg, #aaaaaa, #272728, #aaaaaa);
+	margin-top: -55px;
+}
+
+.video_large {
+	/* 기존 코드 */
+	/* display: flex;
+	width: 55vw;
+	height: 61.300309vh;
+	margin: auto; */
+
+	display: flex;
+	width: 60vw;
+	height: 67.3003029vh;
+	margin: auto;
+	position: fixed;
+
+	/* 영상 css */
+	display: flex;
+	margin: auto;
+	box-shadow: 3px 3px 9px 4px black;
+	border-radius: 0.5rem;
+	border: 1.5px solid transparent;
+	background-origin: border-box;
+	background-clip: content-box, border-box;
+	background-image: linear-gradient(#000000, #000000), linear-gradient(316deg, #aaaaaa, #272728, #aaaaaa);
+	/* width: 1154px;
+    height: 760px;
+    margin-top: -110px;*/
+}
+
+
+.parentDiv {
+	position: relative;
+	width: 100%;
+}
+
+.parentDiv_all {
+	position: relative;
+	width: 50%;
+	height: 33.4365322vh;
+}
+
+.childDiv {
+	position: relative;
+	display: flex;
+	width: 60vw;
+	height: 67.3003029vh;
+	margin: 0;
+}
+
+.childDiv_all {
+	position: relative;
+	display: flex;
+	width: 29vw;
+	height: 32.4365322vh;
+	margin: 0;
+	top: -32.4365322vh;
+}

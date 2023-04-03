@@ -1,0 +1,3 @@
+.parking_full {
+  font-size: 0.8rem;
+}

@@ -1,0 +1,4 @@
+{
+	"REACT_APP_WEBSOCKET_URL": "localhost",
+	"REACT_APP_PORT": "4200"
+}

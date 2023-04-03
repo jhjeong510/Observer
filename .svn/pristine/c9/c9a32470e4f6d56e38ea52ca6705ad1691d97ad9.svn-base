@@ -1,0 +1,81 @@
+#chart {}
+
+#chart:hover {
+  z-index: 1;
+}
+
+#chart_bar {
+  padding: 0.5rem;
+  width: 100%;
+}
+
+#chart_bar::-webkit-scrollbar {
+  width: 13px;
+}
+
+#chart_bar::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+#chart_bar::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+
+#chart_doughnut {
+  position: relative;
+}
+
+#chart_doughnut:hover {
+  z-index: 1;
+}
+
+.description {
+  position: absolute;
+  height: 10rem;
+  top: 41%;
+  right: 11%;
+}
+
+.description_ob {
+  position: absolute;
+  height: 10rem;
+  top: 48%;
+  right: 11%;
+}
+
+.description_parkingCtl {
+  position: absolute;
+  top: 45%;
+  right: 4%;
+}
+
+.description_service {
+  position: absolute;
+  height: 11rem;
+  top: 38%;
+  right: 11%;
+}
+
+.empty_img {
+  position: absolute;
+  top: 45%;
+  left: 16.2%;
+}
+
+.description_label {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  color: #c3c7d9;
+}
+
+.description_count {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}

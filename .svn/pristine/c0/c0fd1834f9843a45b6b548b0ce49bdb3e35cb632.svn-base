@@ -1,0 +1,47 @@
+@keyframes blink {
+    50% {
+        background-color: transparent;
+    }
+}
+
+.onEvent {
+    z-index: 10000;
+    height: 180px;
+    width: 500px;
+    background-color: #9f3737;
+    animation: blink 1s;
+    animation-iteration-count: 30;
+    margin-top: 3vh;
+}
+
+.unAck {
+    z-index: 10000;
+    height: 180px;
+    width: 500px;
+    background-color: #9f3737;
+    margin-top: 3vh;
+}
+
+.normal {
+    z-index: 10000;
+    height: 180px;
+    width: 500px;
+    background-color: transparent;
+    margin-top: 3vh;
+}
+
+.mapImage {
+    float: left;
+    width: 229px;
+    background-color: blue;
+    overflow: hidden;
+}
+
+.mapImage img {
+    max-width: 100%;
+    height: auto;
+}
+
+.container {
+    display: flex;
+}

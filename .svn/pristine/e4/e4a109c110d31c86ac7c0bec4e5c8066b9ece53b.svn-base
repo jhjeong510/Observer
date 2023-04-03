@@ -1,0 +1,34 @@
+.parking_status_table {
+	width: 100%;
+}
+
+.parking_status_all {
+	border-bottom: 2px solid #8e8e8e;
+	border-width: 150%;
+	text-align: center;
+}
+
+.type_detail_row {
+	height: 5vh;
+	margin: 1rem 0;
+}
+
+.parking_type_label {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 5vh;
+	font-size: 1.2rem;
+	border-radius: 1rem;
+	margin: 0.5rem;
+}
+
+.parking_type_icon {
+	margin-right: 1rem;
+}
+
+.occupancy_full {
+	padding: 0.5rem;
+	background-color: red;
+	border-radius: 0.5rem;
+}

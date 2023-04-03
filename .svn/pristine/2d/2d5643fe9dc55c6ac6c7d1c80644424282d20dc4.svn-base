@@ -1,0 +1,212 @@
+/* Buttons */
+
+.btn {
+  font-size: $btn-font-size;
+  line-height: 1;
+  font-weight: normal;
+
+  i {
+    margin-right: .3rem;
+  }
+
+  &.btn-rounded {
+    @include border-radius(50px);
+  }
+
+  &.btn-fw {
+    width: 2.8rem;
+    max-height: 42px;
+    padding: 0.35rem 0.5rem;
+  }
+
+  &.btn-config {
+    margin-top: 22px;
+    height: 40px;
+  }
+
+  &.btn-sm {
+    font-size: $btn-font-size-sm;
+  }
+
+  &.btn-lg {
+    font-size: $btn-font-size-lg;
+  }
+
+  &.btn-xs {
+    padding: $btn-padding-y-xs $btn-padding-x-xs;
+    font-size: $btn-font-size-xs;
+  }
+
+  /* Buttons with only icons */
+  &.btn-icon {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+  }
+
+  /* Buttons with icon and text */
+  &.btn-icon-text {
+    .btn-icon-prepend {
+      margin-right: .5rem;
+    }
+
+    .btn-icon-append {
+      margin-left: .5rem;
+    }
+  }
+
+  &.btn-social-icon {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+  }
+
+  &.get-started-btn {
+    font-size: 0.75rem;
+    border: 1px solid rgba(#ffffff, 0.3);
+    font-weight: $font-weight-medium;
+    padding: 0.9375rem 1.0625rem;
+
+    @media (max-width: 576px) {
+      font-size: 0.6rem;
+      padding: 0.4375rem 0.6625rem;
+    }
+  }
+}
+
+
+
+.btn-group {
+  .btn {
+    +.btn {
+      border-left: 0;
+    }
+  }
+}
+
+.btn-toolbar {
+  .btn-group {
+    +.btn-group {
+      @extend .ml-2;
+    }
+  }
+}
+
+/*social buttons*/
+@each $color,
+$value in $social-colors {
+  .btn-#{$color} {
+    @include social-button(social-color($color));
+  }
+
+  .btn-outline-#{$color} {
+    @include social-outline-button(social-color($color));
+  }
+}
+
+/* inverse buttons */
+@each $color,
+$value in $theme-colors {
+  .btn-inverse-#{$color} {
+    @include button-inverse-variant($value);
+  }
+
+  .btn-#{$color} {
+    &:not(.btn-light):not(.btn-secondary) {
+      color: $black;
+      background: linear-gradient(133deg, #424242 -10%, #c2c2c2 30%, #C2C2C3 60%, #424242);
+      border: 1.5px solid #bbbaba;
+      box-shadow: 1px 1px 3px 1px black;
+      font-weight: 700;
+      text-shadow: 1px 1px #eae7e7;
+
+      &:hover,
+      &:focus,
+      // &:active {
+        {
+        // color: $white;
+      }
+
+      &:active{
+        outline: 0;
+        outline-offset: 0;
+        background: linear-gradient(133deg, #000000 -10%, #494848 30%, #787878 60%, #101010);
+        text-shadow: 1px 1px #252525;
+        border: 1.5px solid #0b0b0b;
+        box-shadow: 0px 0px 2px 2.2px #4f4f4f;
+        color: #b1b1b1;
+        font-weight: bolder;
+      }
+
+      &:focus,
+      &:active {
+        // background: $value;
+        // border-color: $value;
+      }
+    }
+
+  }
+}
+
+// 보고서 모달 버튼(보고서 생성)
+button.btn.btn-success.btn-fw.btn.btn-primary {
+  // width: 300px;
+  // padding: 0.5rem;
+
+
+  width: 100px;
+  padding: 0.5rem;
+  // background: linear-gradient(140deg, #a8a8a8, #5e5e5e);
+  // border: 0.5px solid;
+  // border-color: #cacaca;
+  // box-shadow: 2px 2px 10px 2px #141414a8, inset 1px 1px 10px 1px #d2d2d2d9;
+  margin-left: 15px;
+
+  // font-family: 'KorailRoundGothicBold';
+  text-shadow: 1.5px 1.5px black;
+
+  background: linear-gradient(133deg, #424242 -10%, #c2c2c2 30%, #C2C2C3 60%, #424242);
+  border: 1.5px solid #bbbaba;
+  box-shadow: 1px 1px 3px 1px black;
+  font-weight: 900;
+  text-shadow: 1px 1px #eae7e7;
+  font-size: 17px;
+  color: black;
+}
+
+button.btn-next.btn.vms-start.btn.btn-secondary {
+  color: #fff;
+  background-color: #ff009d;
+  padding: 0.7rem;
+  font-size: larger;
+}
+
+//버튼 모음- 취소
+button.btn.btn-secondary {
+  // background: linear-gradient(133deg, #424242 -10%, #c2c2c2 30%, #C2C2C3 60%, #424242);
+  // // background: linear-gradient(133deg, #424242 1%, #c2c2c2 35%, #c2c2c2 60%, #424242 );
+  // border: 1.5px solid #bbbaba;
+  box-shadow: 1px 1px 3px 1px black;
+  font-weight: 700;
+  text-shadow: 1px 1px #000000;
+  background: linear-gradient(129deg, #343434 30%, #7B7B7C, #3d3d3d);
+  border: 1.5px solid #7d7c7c;
+  color: white;
+}
+
+button.btn.btn-secondary:hover {
+  box-shadow: 0px 0px 2px 2.2px #a4b9c5;
+  border: 1.5px solid #1e262a;
+  color: white;
+}
+
+
+button.btn.btn-secondary:active {
+  outline: 0;
+  outline-offset: 0;
+  background: linear-gradient(133deg, #000000 -10%, #494848 30%, #787878 60%, #101010);
+  text-shadow: 1px 1px #252525;
+  border: 1.5px solid #0b0b0b;
+  color: #b1b1b1;
+  box-shadow: 0px 0px 2px 2.2px #4f4f4f;
+}

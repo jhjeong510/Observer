@@ -1,0 +1,32 @@
+/* 코레일 둥근고딕 */
+@font-face {
+  font-family: 'KorailRoundGothicBold';
+  src: local('KorailRoundGothicBold'), url('../font/Korail_Round_Gothic_Bold.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+
+.leftbar {
+  /* width: 28.5rem; */
+  width: 28rem;
+  height: 86vh;
+  padding: 0;
+  float: left;
+  background-color: transparent;
+  position: relative;
+  font-family: 'KorailRoundGothicBold';
+  /* font-family: 'Nanum Gothic', sans-serif; */
+  /* border: 2px solid; */
+  border-radius: 30px;
+  /* box-shadow: 5px 5px 5px 5px #00000078; */
+  margin-top: 2px;
+  padding-left: 0.5rem;
+  font-weight: bold;
+}
+
+.menuGrid {
+  position: relative;
+  font-family: 'KorailRoundGothicBold';
+  font-weight: bold;
+}

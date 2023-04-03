@@ -1,0 +1,8 @@
+.select_camera {
+  margin: auto;
+}
+
+.name_input {
+  width: 100%;
+  margin: auto;
+}

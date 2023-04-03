@@ -1,0 +1,17 @@
+.deviceDetail {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.iconColorNormal {
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.iconColorOnEvent {
+  display: flex;
+  align-items: center;
+  color: red;
+}

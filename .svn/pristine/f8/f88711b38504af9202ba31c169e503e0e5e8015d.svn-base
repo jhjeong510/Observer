@@ -1,0 +1,31 @@
+const ParkingType = 
+	{
+		type_1: {
+			type_name: '장애인',
+			color: 'blue'
+		},
+		type_2: {
+			type_name: '경차',
+			color: 'yellow'
+		},
+		type_3: {
+			type_name: '여성전용',
+			color: 'pink'
+		},
+		type_4: {
+			type_name: '민원인 전용',
+			color: 'gray'
+		},
+		type_5: {
+			type_name: '전기차',
+			color: 'sky'
+		},
+		type_6: {
+			type_name: '비주차 구역',
+			color: 'red'
+		}
+	}
+
+
+
+export default ParkingType

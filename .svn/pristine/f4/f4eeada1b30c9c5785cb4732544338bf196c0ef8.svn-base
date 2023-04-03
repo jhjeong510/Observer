@@ -1,0 +1,7 @@
+import React from 'react';
+import styles from './VCounterInfoSetting.module.css';
+
+export default function VCounterInfoSetting({ vCounterInfo }) {
+
+  return <></>
+}

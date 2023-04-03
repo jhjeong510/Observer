@@ -1,0 +1,76 @@
+const net = require('net');
+const dbManager = require("../db/dbManager");
+
+const connectTcp = (ipaddress, port) => {  
+	// vcounter가 1개일때, > 2개 이상일 경우
+	console.log(`try connecting to VCounter ${ipaddress}`);
+	let socket = net.connect({
+		host: ipaddress,
+		port: port
+	});
+
+	socket.on('connect', () => {
+		console.log(`VCounter tcp socket connected(${ipaddress})`);
+		global.VCounterSocket = socket;
+	});
+
+	socket.on('data', async (data) => {
+		console.log(`buffer length: ${data.length}`); // length = 26
+		if (data.length === 26) {
+			const buffer = Buffer.from(data);
+			const hexString = buffer.toString('hex');
+			const packetData = [...hexString];
+			let newPacketData = [];
+			const bytes = packetData.join('');
+			if (bytes.length % 2 !== 0) {
+				bytes = bytes.substring(0, bytes.length - 1);
+			}
+			if (bytes.match(/^[0-9a-fA-F]+$/)) {
+				newPacketData = bytes.match(/.{2}/g).map(byte => parseInt(byte, 16));
+			}
+		
+			const emptySlots = newPacketData[22] * 256 + newPacketData[21]; 
+			const inCount = newPacketData[10] * 256 * 256 * 256 + newPacketData[9] * 256 * 256 + newPacketData[8] * 256 + newPacketData[7];
+			const outCount = newPacketData[14] * 256 * 256 * 256 + newPacketData[13] * 256 * 256 + newPacketData[12] * 256 + newPacketData[11];
+			const vehicleCount = newPacketData[6] * 256 + newPacketData[5];
+			const query = `UPDATE "ob_vcounter_count" SET empty_slots='${emptySlots}', in_count='${inCount}', out_count='${outCount}', vehicle_count='${vehicleCount}'`;
+			try {
+				const res = await dbManager.pgQuery(query);
+			} catch (err) {
+				console.log('vcounter data received err: ', err)
+			}
+	
+			if (global.websocket) {
+				global.websocket.emit("vCounterInfo", { vCounterInformation: {
+					emptySlots,
+					inCount,
+					outCount,
+					vehicleCount
+				} });
+			}
+		}
+	});
+
+	socket.on('close', () => {
+		console.log(`VCounter connection close(${ipaddress})`);
+		global.VCounterSocket = undefined;
+
+		setTimeout(() => {
+			connectTcp(ipaddress, port);
+		}, 5000);
+	});
+
+	socket.on('error', (err) => {
+		console.log(`VCounter error(${ipaddress}) ${err.code}`);
+	});
+}
+
+exports.connectVCOUNTER = async () => {
+	connectTcp(process.env.VCOUNTER_IP, process.env.VCOUNTER_PORT);
+}
+
+exports.disconnectVCounter = () => {
+	if (global.VCounterSocket !== undefined) {
+		global.VCounterSocket.destroy();
+	}
+}

@@ -1,0 +1,96 @@
+.Item{
+	border: 2px solid #666565;
+	box-sizing: border-box;
+	width: 100px;
+	height: 60px;
+	position: relative;
+	margin:5px 10px 5px 10px;
+	background-color: #202020;
+	border-radius: 5px;
+	text-align: center;
+	vertical-align:middle;
+	cursor: move; 
+  }
+  .Dragging{
+	opacity: .5;
+	/* background-color: red; */
+  }
+  .ItemDragOver{
+	border: 2px solid #666565;
+	box-sizing: border-box;
+	width: 100px;
+	height: 60px;
+	position: relative;
+	margin:5px 10px 5px 10px;
+	background-color: #202020;
+	border-radius: 5px;
+  }
+  /* .Item:hover{
+	cursor: default;
+	transition: 0.3s;
+	border: 2px solid white;
+  } */
+  /* .Item:active{
+	cursor: move;
+	transition: 0.3s;
+	border: 2px solid blueviolet;
+  } */
+  .ItemButton{
+	position:absolute;
+	top: 0px;
+	right:0;
+	z-index: 100;
+	color: white;
+	border-radius: 5px;
+	background-color: #666565;
+	/* width:10px; */
+	/* height:10px; */
+	font-size:0.1px;
+  }
+  .ItemButton:hover{
+	cursor: pointer;
+  }
+  .ItemContent{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	margin:0;
+	padding:0;
+	z-index: 50;
+	background-color: transparent;
+  }
+  .ItemContent:hover{
+	cursor: default;
+  }
+  .Img{
+	padding-top:7px;
+	user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	width: 40px;
+	height: 40px;
+	object-fit: contain;
+	/* background-color: red; */
+	pointer-events: none;
+  }
+  .select{
+	position: absolute;
+	top:-2px;
+	left:-2px; /*임의로 조정한 값*/
+	width:100px;
+	height: 60px;
+	background-color: transparent;
+	box-sizing: border-box;
+	margin:0;
+	padding:0;
+	border-radius: 5px;
+	z-index:90;
+  }
+  .select:hover{
+	cursor: move;
+	border: 2px solid white;
+  }
+  

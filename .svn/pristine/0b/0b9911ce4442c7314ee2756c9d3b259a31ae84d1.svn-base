@@ -1,0 +1,11 @@
+.status {
+  position: relative;
+  left: 50%
+}
+
+.location {
+  display: flex;
+  width: 40%;
+  justify-content: space-around;
+  border: 2px solid;
+}

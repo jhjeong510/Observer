@@ -1,0 +1,119 @@
+import React from 'react'
+import iconBlinker from '../../assets/images/alert.webp';
+
+
+export default function BlinkDeviceEventIcon({ deviceList, breathSensorList, currBuildingIdx, currFloorIdx, currBuildingServiceType }) {
+	if (deviceList) {
+		const devices = deviceList.filter(device => {
+			if (device.type !== 'building' && device.type !== 'pids' &&
+				device.building_idx === currBuildingIdx &&
+				device.floor_idx === currFloorIdx &&
+				device.building_service_type === currBuildingServiceType) {
+				return true;
+			} else {
+				return false;
+			}
+		});
+
+		if (devices.length > 0) {
+			return devices.map((device, index) => {
+				// if (device.type === 'breathSensor') {
+				// 	const res = this.state.cy.getElementById(device.type + '.' + device.id);
+				// 	const checkSensor = breathSensorList.find((sensor) => device.ipaddress === sensor.ipaddress)
+				// 	if (res && res._private.data) {
+				// 		if (checkSensor && checkSensor.use_status === 'true') {
+				// 			if (device.status !== 0 && device.status !== '0') {
+				// 				const divStyle = {
+				// 					position: 'absolute',
+				// 					top: parseInt(res.renderedPosition().y) + 136,  //for blinker01
+				// 					left: parseInt(res.renderedPosition().x) + 465,
+				// 					border: '0px solid black',
+				// 					backgroundColor: '#ffffff',
+				// 					backgroundColor: 'rgba( 255, 255, 255, 0 )',
+				// 					display: 'none',
+				// 				}
+
+				// 				if (device.status != 0 && device.status != '0' && device.status != null) {
+				// 					divStyle.display = 'initial';
+				// 				}
+				// 				return (
+				// 					<div className={'device' + device.id} style={divStyle} key={index}>
+				// 						<img src={iconBlinker} style={{ height: '20px', width: '20px' }} />
+				// 					</div>
+				// 				);
+				// 			} else {
+				// 				if (checkSensor && checkSensor.prison_door_status === 'lock') {
+				// 					const divStyle = {
+				// 						position: 'absolute',
+				// 						top: parseInt(res.renderedPosition().y) + 136,  //for blinker01
+				// 						left: parseInt(res.renderedPosition().x) + 445,
+				// 						border: '0px solid black',
+				// 						backgroundColor: '#ffffff',
+				// 						backgroundColor: 'rgba( 255, 255, 255, 0 )',
+				// 						display: 'none',
+				// 					}
+
+				// 					if (device.status === 0 || device.status === '0') {
+				// 						divStyle.display = 'initial';
+				// 					}
+				// 					return (
+				// 						<div className={'device' + device.id} style={divStyle} key={index}>
+				// 							<img src={iconOnButton} style={{ height: '12px', width: '12px' }} />
+				// 						</div>
+				// 					);
+				// 				} else if (checkSensor && checkSensor.prison_door_status === 'unlock') {
+				// 					const divStyle = {
+				// 						position: 'absolute',
+				// 						top: parseInt(res.renderedPosition().y) + 136,  //for blinker01
+				// 						left: parseInt(res.renderedPosition().x) + 445,
+				// 						border: '0px solid black',
+				// 						backgroundColor: '#ffffff',
+				// 						backgroundColor: 'rgba( 255, 255, 255, 0 )',
+				// 						display: 'none',
+				// 					}
+
+				// 					if (device.status === 0 || device.status === '0') {
+				// 						divStyle.display = 'initial';
+				// 					}
+				// 					return (
+				// 						<div className={'device' + device.id} style={divStyle}>
+				// 							<img src={iconOffButton} style={{ height: '12px', width: '12px' }} />
+				// 						</div>
+				// 					);
+				// 				}
+				// 			}
+				// 		}
+				// 	} else {
+				// 		return (<div key={index}>no device 2</div>);
+				// 	}
+				// } else {
+				const res = document.getElementsByClassName('device' + device.id);
+				if (res) {
+					const divStyle = {
+						position: 'absolute',
+						top: parseInt(device.top_location) - 20,
+						left: parseInt(device.left_location) + 20,
+						border: '0px solid black',
+						backgroundColor: '#ffffff',
+						backgroundColor: 'rgba( 255, 255, 255, 0 )',
+						display: 'none',
+						zIndex: 99
+					}
+
+					if (device.status != 0 && device.status != '0' && device.status != null) {
+						divStyle.display = 'initial';
+					}
+					return (
+						<div className={'device' + device.id} style={divStyle} key={index}>
+							<img src={iconBlinker} style={{ height: '20px', width: '20px' }} />
+						</div>
+					);
+				} else {
+					return ''
+				}
+			});
+		} else {
+			return ''
+		}
+	}
+}

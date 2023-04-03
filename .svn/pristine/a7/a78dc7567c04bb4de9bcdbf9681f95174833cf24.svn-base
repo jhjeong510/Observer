@@ -1,0 +1,56 @@
+import React, { useState } from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
+
+export default function ParkingService({ 
+	showParkingServiceModal,
+	handleShowParkingServiceModal,
+	show, setShow, title, message  }) {
+	const [modalWarnMessage, setModalWarnMessage] = useState('');
+
+
+	const handleConfirm = () => {
+
+
+		try {
+	
+		} catch (err) {
+			console.log('카메라 추가 오류: ', err);
+		}
+		handleCancel();
+	}
+	const handleCancel = () => {
+		handleShowParkingServiceModal();
+	}
+
+	return (
+		<div className='AddCameraModal'>
+				<Modal 
+					show={showParkingServiceModal}
+					size='lg'
+					centered
+					onHide={handleCancel}
+					contentClassName={'allEvent'} 
+				>
+
+
+				{/* <Modal show={showParkingServiceModal} onHide={handleCancel} animation={true} ClassName="parkingServiceModal" centered> */}
+					<Modal.Header closeButton>
+						<Modal.Title>{title}</Modal.Title>
+					</Modal.Header>
+					<Modal.Body id='inquiry-modal'>
+						<Form.Group controlId="Idx">
+							<Form.Label>{message}</Form.Label>
+							
+						</Form.Group>
+						<Form.Text style={{ color: 'red' }}>{modalWarnMessage}</Form.Text>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button variant="primary" onClick={handleConfirm}> 추가
+						</Button>
+						<Button variant="secondary" onClick={handleCancel}> 취소
+						</Button>
+					</Modal.Footer>
+				</Modal>
+		</div >
+	)
+}

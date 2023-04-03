@@ -1,0 +1,88 @@
+.eventStatus {
+  /* width: 28.125rem; */
+  height: 43vh;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  min-height: 41px;
+  max-height: 809px;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1.5px solid #d8d8d8;
+  box-shadow: 4px 4px 14px 3.5px black;}
+
+.body {
+  height: 38.872vh;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+
+  border-style: none;
+  margin-top: 1px; 
+  margin-right: 3px;
+}
+
+.content {
+  max-height: 35vh;
+  display: flex;
+  justify-content: flex-start;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #00000099;
+  /* height: 33.5vh; */
+  height: 34.6vh;
+  width: 96.5%;
+  margin: 0.5rem;
+  border: 2px solid #80808000;
+  border-radius: 20px;
+  margin-top: 1px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  background: linear-gradient(147deg,#000000,#3e3e3e);
+  border-radius: 20px 20px 0px 0px;
+  height: 4.128vh;
+}
+
+.title {
+  padding: 0.65rem 0.5rem 0.6rem 0.7rem;
+  width: 100%;
+  height: 2.5rem;
+  font-size: 1rem;
+  
+  margin-top: 2px;
+  margin-left: 6px;
+}
+
+.filter {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.filter:hover {
+  background: rgba(54, 71, 58, 0.67);
+}
+
+.filter.list.dropdown {
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+.handleDisplayMenu {
+  display: flex;
+  cursor: pointer;
+}
+
+.handleDisplayMenu:hover {
+  background: rgba(54, 71, 58, 0.67);
+}
+
+.handleSettingComponent {
+  display: flex;
+  align-items: center;
+  border: none;
+}

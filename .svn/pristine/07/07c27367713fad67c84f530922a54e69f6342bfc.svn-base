@@ -1,0 +1,81 @@
+import React, { useEffect, useState } from 'react';
+import styles from './ParkingInfo.module.css';
+import ParkingType from './ParkingType';
+import parking_all from '../../assets/icon/parking_all.png';
+
+export default function ParkingInfo({ parkingCameras, parkingCamera }) {
+	const [typeList, setTypeList] = useState(Object.entries(ParkingType));
+
+	useEffect(() => {
+
+	}, [parkingCamera])
+
+	if (parkingCamera) {
+		return (
+			<>
+				<table className={styles.parking_status_table} >
+					<tbody>
+						<tr key={0} className={styles.parking_status_all}>
+							<td className={styles.parking_type_label}>
+								<span className={styles.parking_type_icon}><img src={parking_all} /></span>
+								<span>전체</span>
+							</td>
+							{/* <td>{parseInt(parkingCamera.total_occupied) !== (parseInt(parkingCamera.total_available) + parseInt(parkingCamera.total_occupied)) ? <span className={styles.occupancy_full}>FULL</span> : parseInt(parkingCamera.total_occupied)}</td> */}
+							<td>{parseInt(parkingCamera.total_occupied) !== (parseInt(parkingCamera.total_available) + parseInt(parkingCamera.total_occupied)) ? parseInt(parkingCamera.total_available) : <span className={styles.occupancy_full}>FULL</span>}</td>
+							<td>{parseInt(parkingCamera.total_available) + parseInt(parkingCamera.total_occupied)}</td>
+						</tr>
+						{typeList && typeList !== undefined && typeList.map((type, index) => {
+							return (
+								<tr key={index + 1} className={styles.type_detail_row}>
+									<td key={index} className={styles.parking_type_label} style={{ backgroundColor: type[1].color }}>
+										<span className={styles.parking_type_icon}>{type[1].icon && type[1].icon}</span>
+										<span>{type[1].type_name}</span>
+									</td>
+									<td style={{ width: '25%', textAlign: 'center', color: '#ebe6e6' }}>occupied</td>
+									<td style={{ width: '25%', textAlign: 'center', color: '#ebe6e6' }}>total</td>
+								</tr>
+							)
+						})
+						}
+					</tbody>
+				</table>
+			</>
+		)
+	} else {
+		return (
+			<>
+				<table className={styles.parking_status_table} >
+					{/* <thead style={{ height: '2.4rem', width: '22rem', borderTop: 'thin solid #4b4747' }}>
+						<tr>
+							<th style={{ width: '15rem', textAlign: 'center', backgroundColor: '#242323', marginLeft: '2px' }}>타입</th>
+							<th style={{ width: '7rem', textAlign: 'center', backgroundColor: '#242323', marginLeft: '2px' }}>남은자리</th>
+						</tr>
+					</thead> */}
+					<tbody>
+						<tr key={0} className={styles.parking_status_all}>
+							<td className={styles.parking_type_label}>
+								<span className={styles.parking_type_icon}><img src={parking_all} /></span>
+								<span>전체</span>
+							</td>
+							<td>occupied</td>
+							<td>total</td>
+						</tr>
+						{typeList && typeList !== undefined && typeList.map((type, index) => {
+							return (
+								<tr key={index + 1} className={styles.type_detail_row}>
+									<td key={index} className={styles.parking_type_label} style={{ backgroundColor: type[1].color }}>
+										<span className={styles.parking_type_icon}>{type[1].icon && type[1].icon}</span>
+										<span>{type[1].type_name}</span>
+									</td>
+									<td style={{ width: '25%', textAlign: 'center', color: '#ebe6e6' }}>occupied</td>
+									<td style={{ width: '25%', textAlign: 'center', color: '#ebe6e6' }}>total</td>
+								</tr>
+							)
+						})
+						}
+					</tbody>
+				</table>
+			</>
+		)
+	}
+}

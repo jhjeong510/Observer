@@ -1,0 +1,18 @@
+.select {
+	padding: 0.4375rem 0.75rem;
+	border: 0;
+	outline: 1px solid #322f2f;
+	color: #ffffff;
+	width: 100%;
+	/* margin-left: 7px; */
+	border: 1px solid #656565;
+	height: calc(2.25rem + 2px);
+	font-weight: normal;
+	font-size: 0.875rem;
+	margin-bottom: 1rem;
+	max-height: 963px;
+	border-radius: 20px;
+	background-color: #323232;
+	box-shadow: 2px 3px 8px 0px #000000bf;
+	text-align: center;
+}

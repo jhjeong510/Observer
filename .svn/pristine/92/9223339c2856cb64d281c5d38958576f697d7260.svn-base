@@ -1,0 +1,216 @@
+const net = require('net');
+const path = require('path');
+const { createServer } = require('http');
+const { Server } = require('socket.io');
+
+require('dotenv').config({ path: path.join(__dirname, '.env') });
+
+const dbManager = require('./dbmanager');
+
+const httpServer = createServer();
+const io = new Server(httpServer, {
+  cors: {
+    origin: '*',
+  }
+});
+
+const arrConnection = [];
+
+io.on('connection', (socket) => {
+  console.log('client connected');
+  console.log('socket id:', socket.id);
+
+  socket.on('manageVCounter', (vCounter) => {
+    if (vCounter && vCounter.cmd && vCounter.ipaddress && vCounter.port) {
+      if (vCounter.cmd === 'add') {
+        console.log(`${vCounter.ipaddress} 장비 추가 연결`);
+        connectTcp(vCounter.ipaddress, vCounter.port);
+      } else if (vCounter.cmd === 'remove') {
+        console.log(`${vCounter.ipaddress} 장비 연결 해제`);
+        // tcp socket destroy 처리
+        arrConnection.find((socketDetail) => (socketDetail.ipaddress === vCounter.ipaddress)).socket.destroy();
+      }
+    }
+  });
+
+  socket.on('disconnect', async () => {
+    await stopVCounter();
+  });
+});
+
+const connectTcp = (ipaddress, port) => {
+  console.log('vCounter 연결 요청: ', ipaddress, port)
+   // vcounter가 1개일때, > 2개 이상일 경우
+  console.log(`try connecting to VCounter ${ipaddress}`);
+  let socket = net.connect({
+      host: ipaddress,
+      port: port
+  });
+
+  socket.on('connect', () => {
+      console.log(`VCounter tcp socket connected(${ipaddress})`);
+      arrConnection.push({ ipaddress: ipaddress, socket: socket});
+  });
+
+  socket.on('data', async (data) => {
+      console.log(`buffer length: ${data.length}`); // length = 26
+      const beforeVCounter = `SELECT * FROM ob_vcounter_count WHERE ipaddress='${socket.remoteAddress}'`;
+      const isbeforeVCounter = await dbManager.pgQuery(beforeVCounter);
+      if(isbeforeVCounter && isbeforeVCounter.rows && isbeforeVCounter.rows.length > 0){
+        let query;
+        if(isbeforeVCounter.rows[0].type === 'in'){
+          query = `UPDATE "ob_vcounter_count" SET empty_slots=empty_slots-1, in_count=in_count+1, vehicle_count=vehicle_count+1, updated_at=NOW()
+                    WHERE ipaddress='${socket.remoteAddress}' AND empty_slots > 0`
+        } else if(isbeforeVCounter.rows[0].type === 'out'){
+          query = `UPDATE "ob_vcounter_count" SET empty_slots=empty_slots+1, out_count=out_count+1, vehicle_count=vehicle_count-1, updated_at=NOW()
+                    WHERE ipaddress='${socket.remoteAddress}' AND vehicle_count > 0`
+        } else if(isbeforeVCounter.rows[0].type === 'in-out') {
+          if (data.length === 26) {
+            const buffer = Buffer.from(data);
+            const hexString = buffer.toString('hex');
+            const binaryString = await hex2bin(hexString);
+            const eventTrigger = binaryString.slice(124,128);
+            console.log('eventTrigger: ', eventTrigger);
+            if(eventTrigger && eventTrigger.length > 0){
+              if(eventTrigger[0] === '1' || eventTrigger[3] === '1'){
+                query = `UPDATE "ob_vcounter_count" SET empty_slots=empty_slots-1, in_count=in_count+1, vehicle_count=vehicle_count+1, updated_at=NOW()
+                    WHERE ipaddress='${socket.remoteAddress}' AND empty_slots > 0`
+              } else if(eventTrigger[1] === '1' || eventTrigger[2] === '1'){
+                query = `UPDATE "ob_vcounter_count" SET empty_slots=empty_slots+1, out_count=out_count+1, vehicle_count=vehicle_count-1, updated_at=NOW()
+                    WHERE ipaddress='${socket.remoteAddress}' AND vehicle_count > 0`
+              }
+            }
+            // const packetData = [...hexString];
+            // let newPacketData = [];
+            // const bytes = packetData.join('');
+            // if (bytes.length % 2 !== 0) {
+            //   bytes = bytes.substring(0, bytes.length - 1);
+            // }
+            // if (bytes.match(/^[0-9a-fA-F]+$/)) {
+            //   newPacketData = bytes.match(/.{2}/g).map(byte => parseInt(byte, 16));
+            // }
+            // const emptySlots = newPacketData[22] * 256 + newPacketData[21]; 
+            // const inCount = newPacketData[10] * 256 * 256 * 256 + newPacketData[9] * 256 * 256 + newPacketData[8] * 256 + newPacketData[7];
+            // const outCount = newPacketData[14] * 256 * 256 * 256 + newPacketData[13] * 256 * 256 + newPacketData[12] * 256 + newPacketData[11];
+            // const vehicleCount = newPacketData[6] * 256 + newPacketData[5];
+            // const query = `UPDATE "ob_vcounter_count" SET 
+            //                 empty_slots='${emptySlots}', in_count='${inCount}', out_count='${outCount}', vehicle_count='${vehicleCount}', updated_at=NOW()
+            //                 WHERE ipaddress='${socket.remoteAddress}'`;
+            try {
+              const res = await dbManager.pgQuery(query);
+              if (global.websocket && res && res.rowCount > 0) {
+                const vCountersQuery = `SELECT * FROM ob_vcounter_count WHERE ipaddress='${socket.remoteAddress}'`;
+                const updateVCounter = await dbManager.pgQuery(vCountersQuery);
+                if(updateVCounter && updateVCounter.rows && updateVCounter.rows.length > 0){
+                  const { name, ipaddress, empty_slots, in_count, out_count, vehicle_count } = updateVCounter.rows[0];
+                  global.websocket.emit("vCounterInfo", { updateVcounter: {
+                    name,
+                    ipaddress,
+                    empty_slots,
+                    in_count,
+                    out_count,
+                    vehicle_count
+                  }});
+                }
+              }
+            } catch (err) {
+              console.log('vcounter data received err: ', err)
+            }
+        }
+      }
+    }
+  });
+
+  socket.on('close', () => {
+      console.log(`VCounter connection close(${ipaddress})`);
+
+      setTimeout(() => {
+        connectTcp(ipaddress, port);
+      }, 5000);
+  });
+
+  socket.on('error', (err) => {
+      console.log(`VCounter error(${ipaddress}) ${err.code}`);
+  });
+}
+
+let isConnected = false;
+
+const hex2bin = async (hex) => {
+  hex = hex.replace("0x", "").toLowerCase();
+  let out = "";
+  for(var c of hex) {
+      switch(c) {
+          case '0': out += "0000"; break;
+          case '1': out += "0001"; break;
+          case '2': out += "0010"; break;
+          case '3': out += "0011"; break;
+          case '4': out += "0100"; break;
+          case '5': out += "0101"; break;
+          case '6': out += "0110"; break;
+          case '7': out += "0111"; break;
+          case '8': out += "1000"; break;
+          case '9': out += "1001"; break;
+          case 'a': out += "1010"; break;
+          case 'b': out += "1011"; break;
+          case 'c': out += "1100"; break;
+          case 'd': out += "1101"; break;
+          case 'e': out += "1110"; break;
+          case 'f': out += "1111"; break;
+          default: return "";
+      }
+  }
+  return out;
+}
+
+const connectVCOUNTER = async () => {
+  const isTableQuery = `SELECT EXISTS(
+                    SELECT * FROM information_schema.tables 
+                    WHERE
+                      table_schema = 'public'
+                      AND
+                    TABLE_NAME = 'ob_vcounter_count'
+                    );`
+  const isTableRes = await dbManager.pgQuery(isTableQuery);
+  const query = `SELECT * FROM ob_vcounter_count`;
+  if(isTableRes && isTableRes.rows && isTableRes.rows.length > 0 && isTableRes.rows[0].exists){
+    const res = await dbManager.pgQuery(query);
+    if (res && res.rows && res.rows.length > 0) {
+      res.rows.forEach((vCounter) => {
+        connectTcp(vCounter.ipaddress, vCounter.port);
+      });
+      isConnected = true;
+    }
+  } else if(isConnected === false) {
+    this.connectVCOUNTER();
+  }
+}
+
+const stopVCounter = () => {
+  arrConnection.forEach(socket => {
+    socket.destroy();
+  });
+}
+
+process.on('SIGUP', () => {
+  console.log('Received: SIGUP');
+  stopVCounter();
+  process.exit(1);
+});
+process.on('SIGINT', () => {
+  console.log('Received: SIGINT');
+  stopVCounter();
+  process.exit(1);
+});
+process.on('SIGQUIT', () => {
+  console.log('Received: SIGQUIT');
+  stopVCounter();
+  process.exit(1);
+});
+
+connectVCOUNTER();
+
+httpServer.listen(parseInt(process.env.PORT) + 2, process.env.WEBSOCKET_URL);
+httpServer.on('listening', () => {
+  console.log('server listening:', httpServer.address());
+});

@@ -1,0 +1,62 @@
+import React, { useEffect, useState, useRef } from 'react';
+import { getParkingCoords } from './api/apiService';
+import ParkingArea from './ParkingArea';
+import styles from './ParkingCameraStream.module.css';
+
+export default function ParkingCameraStream({ cameraId, socket, socketCameraRef, handleConnectSocket, handleDisconnectSocket, oneCamera, cameraIp, parkingCoordsUpdate }) {
+	const isMountedRef = useRef();
+	const [receivedData, setReceivedData] = useState('');
+	const [parkingCoordsData, setParkingCoordsData] = useState([]);
+
+	const getCameraLiveStream = async () => {
+		if (socket && cameraId) {
+			await socket.on('cameraStream', (received) => {
+				if (received && received.cameraId === cameraId) {
+					isMountedRef.current && setReceivedData(received.data);
+				}
+			})
+		}
+	}
+
+	useEffect(() => {
+		isMountedRef.current = new Date();
+		getCameraLiveStream();
+		return () => {
+			isMountedRef.current = null;
+			console.log('unmount');
+		}
+	}, [])
+
+	const getParkingCoordinates = async (cameraIp) => {
+		try {
+			const res = await getParkingCoords(cameraIp);
+			if (res && res.data && res.data.result.length > 0) {
+				await setParkingCoordsData(res.data.result);
+			}
+		} catch (err) {
+			console.log('getParkingCoordinates err: ', err);
+		}
+	}
+
+	useEffect(() => {
+		cameraIp && getParkingCoordinates(cameraIp);
+	}, [parkingCoordsUpdate])
+
+
+	if (cameraId) {
+		return <div>
+			<div className={oneCamera ? styles.parentDiv : styles.parentDiv_all}>
+				<img src={receivedData ? 'data:image/jpeg;base64,' + receivedData : require('../../assets/images/loading_rm_bg.gif')} className={(receivedData !== '' && oneCamera) ? styles.video_large : (receivedData !== '' && !oneCamera) ? styles.video : oneCamera ? styles.loading_large : styles.loading} />
+				<div className={oneCamera ? styles.childDiv : styles.childDiv_all}>
+					<ParkingArea
+						oneCamera={oneCamera}
+						src={receivedData}
+						parkingCoordsData={parkingCoordsData}
+					/>
+				</div>
+			</div>
+		</div>
+	} else {
+		return ''
+	}
+}

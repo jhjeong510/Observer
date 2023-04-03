@@ -1,0 +1,136 @@
+import React, { useState } from 'react';
+import styles from './ParkingService.module.css'
+import { Modal, Button, Form, Tabs, Tab, Nav, Row, Col, Table } from 'react-bootstrap';
+import ParkingInfo from './ParkingInfo';
+import AddParkingCameraModal from '../shared/modal/AddParkingCameraModal';
+import { handleCloseContext } from "./handlers/ContextMenuHandler";
+
+export default function ParkingService({
+	showParkingServiceModal,
+	handleShowParkingServiceModal,
+	show, setShow, title, message }) {
+	const [modalWarnMessage, setModalWarnMessage] = useState('');
+	const [currentTabName, setCurrentTabName] = useState('observer parkingService');
+	const [cameraModal, setCameraModal] = useState({ show: false, title: '', message: '', callback: false });
+
+	const handleShowModalCamera = () => {
+      setCameraModal({ show: true, title: '주차 카메라 추가', message: '카메라 선택', callback: false });
+      handleCloseContext();
+   }
+
+	const handleConfirm = () => {
+		try {
+
+		} catch (err) {
+			console.log('카메라 추가 오류: ', err);
+		}
+		handleCancel();
+	}
+
+	const handleCancel = () => {
+		handleShowParkingServiceModal();
+	}
+
+	const handleCurrentTabName = (value) => {
+		setCurrentTabName(value)
+	}
+
+	
+	return (
+		<>
+			{/* <Modal 
+					show={showParkingServiceModal}
+					size='lg'
+					centered
+					onHide={handleCancel}
+					contentClassName={'allEvent'} 
+				>
+
+
+					<Modal.Header closeButton>
+						<Modal.Title>{title}</Modal.Title>
+					</Modal.Header>
+					<Modal.Body id='inquiry-modal'>
+						<Form.Group controlId="Idx">
+							<Form.Label>{message}</Form.Label>
+							
+						</Form.Group>
+						<Form.Text style={{ color: 'red' }}>{modalWarnMessage}</Form.Text>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button variant="primary" onClick={handleConfirm}> 추가
+						</Button>
+						<Button variant="secondary" onClick={handleCancel}> 취소
+						</Button>
+					</Modal.Footer>
+				</Modal> */}
+
+			<Modal
+				show={showParkingServiceModal}
+				size='xl'
+				centered
+				contentClassName={styles.modal_content_observer_parkingService}
+				onHide={handleCancel}
+			>
+				<Modal.Header>
+					<Modal.Title>옵저버 주차관제시스템</Modal.Title>
+					<div >
+						<a href="!#" className={styles.setting_modal_closer} onClick={handleCancel}></a>
+					</div>
+					<Button style={{ marginRight: '3%' }} onClick={handleShowModalCamera}> 카메라 추가 </Button>
+				</Modal.Header>
+				<Modal.Body>
+					<div>
+						<Tab.Container id="left-tabs-example" defaultActiveKey="vms">
+							<div className='col-12'>
+								<Row className='parking-tab'>
+									<Col sm={1} className={styles.observer_parking_col_sm_1}>
+										<Nav variant="tabs" className="flex-column nav-tabs-vertical">
+											<Nav.Item>
+												<Nav.Link eventKey="vms">
+													전체
+												</Nav.Link>
+											</Nav.Item>
+										</Nav>
+									</Col>
+									<Col sm={8} className={styles.observer_parking_col_sm_8}>
+										<Tab.Content>
+											<Tab.Pane eventKey="vms">
+												카메라 영역
+											</Tab.Pane>
+										</Tab.Content>
+									</Col>
+
+									<Col sm={3} className={styles.observer_parking_col_sm_3}>
+										<Tab.Content>
+											<Tab.Pane eventKey="vms">
+												<div className={styles.info_title}>
+													<h4> 주차장 세부현황 </h4>
+													<ParkingInfo />
+
+												</div>
+											</Tab.Pane>
+										</Tab.Content>
+									</Col>
+								</Row>
+							</div>
+
+							<div className='row'>
+								<Row className='parking-tab'>
+									<Col sm={12} className={styles.observer_parking_event_col_sm_12}>
+										<Tab.Content>
+											<Tab.Pane eventKey="vms">
+												이벤트 정보
+											</Tab.Pane>
+										</Tab.Content>
+									</Col>
+								</Row>
+							</div>
+						</Tab.Container>
+					</div>
+				</Modal.Body>
+			</Modal>
+			{cameraModal.show ? <AddParkingCameraModal show={cameraModal.show} setShow={setCameraModal} message={cameraModal.message} title={cameraModal.title}   /> : null}
+		</>
+	)
+}

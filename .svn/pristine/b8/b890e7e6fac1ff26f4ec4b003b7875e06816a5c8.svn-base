@@ -1,0 +1,61 @@
+.parking_status_table {
+	width: 100%;
+}
+
+.parking_status_all {
+	display: flex;
+	border-bottom: 2px solid #8e8e8e;
+	border-width: 150%;
+	text-align: center;
+}
+
+.type_detail_row {
+	display: flex;
+}
+
+.parking_type_label {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 4.5vh;
+	font-size: 1.2rem;
+	border-radius: 1rem;
+	margin: 0.5rem 1rem;
+	width: 60%;
+}
+
+.parking_type_icon {
+	margin-right: 1rem;
+}
+
+.occupancy_full {
+	padding: 0.5rem;
+	background-color: red;
+	border-radius: 0.5rem;
+}
+
+.avail_count {
+	width: 20%;
+	background-color: #006927;
+	border-radius: 0.5rem;
+	text-align: center;
+	color: #ebe6e6;
+	margin: 0.5rem 0.25rem;
+	font-size: 1.2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.total_count {
+	width: 20%;
+	background-color: #282828;
+	text-align: center;
+	border-radius: 0.5rem;
+	color: #ebe6e6 margin;
+	margin: 0.5rem 0.25rem;
+	font-size: 1.2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

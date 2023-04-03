@@ -1,0 +1,84 @@
+.observer_parking_col_sm-1 {
+	max-width: 1138px;
+
+	border-right: thin solid rgb(75, 71, 71);
+	margin-bottom: 7px;
+}
+
+.observer_parking_col_sm_8 {
+	max-width: 75rem;
+	background-color: #424242;
+	height: 83vh;
+	margin-right: 1rem;
+	border-radius: 1rem;
+	margin-bottom: 7px;
+}
+
+.observer_parking_col_sm_3 {
+	max-width: 25rem;
+	background-color: #424242;
+	height: 83vh;
+	border-radius: 1rem;
+	border-right: thin solid rgb(75, 71, 71);
+	margin-bottom: 7px;
+}
+
+.observer_parking_event_col_sm_12 {
+	max-width: 100rem;
+	background-color: #424242;
+	height: 14rem;
+	margin-bottom: 7px;
+	margin-left: 9.6%;
+}
+
+
+.parking-tab.row {
+	display: flex;
+	flex-direction: row;
+	min-width: 1800px;
+}
+
+.setting_modal_closer {
+	display: flex;
+	justify-content: flex-end;
+	text-decoration: none;
+	position: absolute;
+	top: 0px;
+	right: 10px;
+	color: rgb(255, 255, 255);
+	padding: 0.3rem;
+	cursor: pointer;
+	z-index: 1;
+	margin-top: 7px;
+	margin-right: 2px;
+}
+
+.setting_modal_closer:after {
+	display: flex;
+	align-content: center;
+	content: "✖";
+	font-size: 20pt;
+	color: #fff;
+	cursor: pointer;
+	z-index: 1;
+}
+
+.modal_content_observer_parkingService {
+	min-width: 1800px;
+	height: 900px;
+	background-color: rgba(0, 0, 0, 0.433);
+	backdrop-filter: blur(8px);
+	border: 1.5px solid;
+	border-color: #8e8e8e;
+	border-radius: 20px;
+	box-shadow: 5px 5px 15px 4px black;
+}
+
+.info_title {
+	margin-top: 1rem;
+}
+
+.parking_status {
+	padding-bottom: 0.5rem;
+	border-bottom: 2px solid #8e8e8e;
+}

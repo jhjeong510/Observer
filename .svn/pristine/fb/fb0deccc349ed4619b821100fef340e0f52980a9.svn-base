@@ -1,0 +1,41 @@
+// /* Dropdowns */
+
+.dropdown {
+  .dropdown-toggle {
+    &.no-caret {
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  .dropdown-menu {
+    margin-top: 0.25rem;
+    font-size: $default-font-size;
+    box-shadow: $dropdown-menu-box-shadow;
+
+    .dropdown-item {
+      font-size: 0.8rem;
+      padding: .25rem 1rem;
+      margin: 0;
+      display: flex;
+      justify-content: space-between;
+
+      &:active {
+        background: initial;
+      }
+
+      &:hover {
+        color: $dropdown-item-hover-color;
+      }
+    }
+
+    &.sidebar-dropdown {
+      &.dropdown-menu-right {
+        .rtl & {
+          left: 10rem !important;
+        }
+      }
+    }
+  }
+}

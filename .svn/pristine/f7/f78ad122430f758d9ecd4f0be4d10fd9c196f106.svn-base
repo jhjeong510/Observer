@@ -1,0 +1,379 @@
+@font-face {
+  font-family: 'KorailRoundGothicBold';
+  src: url('../../../app/font/Korail_Round_Gothic_Bold.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+// 모달컨텐트 스타일
+.modal {
+  .modal-dialog {
+    .modal-content {
+      // background-color: red;
+      // backdrop-filter: blur(4px);
+      font-weight: 600;
+      // border: 1.5px solid #000000;
+      // box-shadow: 5px 1.5px 15px 4px black;
+
+
+      // background-color: #0000009c;
+      background: url("../../images/dashboard/modal_background.png");
+      
+
+
+      // background-position: center;
+
+      .modal-header {
+        .close {
+          span {
+            font-size: 20px;
+            font-weight: 400;
+            color: #6a6a6a;
+
+            font-family: 'KorailRoundGothicBold';
+
+
+            // backdrop-filter: blur(4px);
+            // box-shadow: 2px 2px 8px 2px bl;
+          }
+        }
+      }
+    }
+  }
+}
+
+.modal-content.allEvents {
+  min-height: 925px;
+  max-height: 925px;
+  min-width: 1800px;
+  // background-color: rgba(255, 45, 45, 0.11);
+  // border: 20px white;
+  height: 1020px;
+
+
+  // font-family: 'KorailRoundGothicBold';
+  // border-radius: 20px;
+}
+
+// 흐림배경 - 데이터 조회
+.modal-content.allEvent {
+  border-radius: 20px;
+  border: none;
+  background: url("../../images/dashboard/modal_background.png");
+  background-position: center;
+}
+
+.all-Events-modal.modal-header {
+  font-family: 'KorailRoundGothicBold';
+
+}
+
+.BreathValue {
+  width: 100%;
+  height: 44vh;
+}
+
+
+.modal-content.carNumberList {
+  min-width: 560px;
+  left: -43%;
+
+  background-color: #0000008b;
+  backdrop-filter: blur(8px);
+  border: 1.5px solid #c0c0c0;
+  box-shadow: 2px 2px 14px 6px black;
+  border-radius: 20px;
+
+}
+
+.parkingServiceModal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: #0000008b;
+  background-clip: padding-box;
+  // border: 1px solid #2c2e33;
+  border: 1px solid #5e5e5e;
+
+  border-radius: 0.3rem;
+  outline: 0;
+  left: -120%;
+  min-height: 925px;
+  max-height: 925px;
+  min-width: 1800px;
+  background-color: rgba(255, 45, 45, 0.11);
+  height: 1020px;
+  
+}
+
+nav.mb-3.anpr-settings.nav.nav-tabs {
+  margin-left: -1px;
+
+}
+
+
+
+// 보고서 창 테두리
+
+.modal-content.report-modal {
+  // width: 1626px;
+  // max-height: 963px;
+  // margin-left: 3.1rem;
+  // margin-top: 3.5rem;
+  // border: 3px solid rgb(19, 57, 68);
+
+  width: 1626px;
+  max-height: 963px;
+  margin-left: 3.1rem;
+  margin-top: 3.5rem;
+  border: 1.5px solid #8e8e8e;
+  border-radius: 20px;
+
+
+  
+  // backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.433);
+  box-shadow: 5px 5px 15px 4px rgb(0, 0, 0);
+  height: 920px;
+
+  background: url("../../images/dashboard/modal_background.png");
+  background-position: center;
+}
+
+.report.modal-header {
+  padding: 10px;
+
+}
+
+.breathSensorList.modal-header {
+  font-size: larger;
+  background-color: #000000d8;
+  font-weight: 600;
+  font-family: "KorailRoundGothicBold";
+  border-radius: 20px 20px 0 0;
+  border: none;
+}
+
+// 설정_창 배경 색
+// 흐림 배경 - 설정
+
+.modal-content.observer.setting {
+  min-width: 1360px;
+  height: 860px;
+
+  background-color: rgba(0, 0, 0, 0.433);
+  // backdrop-filter: blur(8px);
+  border: 1.5px solid;
+  border-color: #8e8e8e;
+  border-radius: 20px;
+  box-shadow: 5px 5px 15px 4px black;
+
+  background: url("../../images/dashboard/modal_background.png");
+  background-position: center;
+}
+
+
+.modal-content.eventType.setting {
+  min-width: 1360px;
+  height: 860px;
+
+  // border: 1.5px solid a5a5a5;
+  // backdrop-filter: blur(8px);
+
+  border: 1.5px solid #8e8e8e;
+  border-radius: 20px;
+  box-shadow: 5px 5px 15px 4px black;
+
+  background: url("../../images/dashboard/modal_background.png");
+  background-position: center;
+
+}
+
+.modal-content.service.use.setting {
+  min-width: 1360px;
+  height: 860px;
+  border: 1.5px solid #8e8e8e;
+  border-color: (0, 0, 0, 0.433);
+  // backdrop-filter: blur(8px);
+  border-radius: 20px;
+  box-shadow: 5px 5px 15px 4px black;
+
+  background: url("../../images/dashboard/modal_background.png");
+  background-position: center;
+}
+
+.modal-content.n-doctor.setting {
+  min-width: 1360px;
+  height: 860px;
+
+  // border: 1.5px solid #b6b6b6;
+  // backdrop-filter: blur(8px);
+
+  border-radius: 20px;
+  border: 1.5px solid #8e8e8e;
+  background-color: rgb(0, 0, 0, 0.433);
+  box-shadow: 5px 5px 15px 4px black;
+
+  background: url("../../images/dashboard/modal_background.png");
+  background-position: center;
+}
+
+div#report-device {
+  width: 435px;
+  height: 440px;
+  overflow: auto;
+  background-color: #1c1c24;
+  margin-bottom: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.observer-report-page {
+  display: flex;
+  flex-direction: column;
+  max-height: 758px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding-bottom: 0;
+}
+
+.observer-report-page.detail {
+  overflow-y: scroll;
+}
+
+.observer-report-page::-webkit-scrollbar {
+  width: 13px;
+}
+
+.observer-report-page::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+.observer-report-page::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+
+.report-event-select {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.report-acknowledge {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.report-event-content.tab-content {
+  width: 1390px;
+  margin-left: 1rem;
+}
+
+.report-modal-body.modal-body {
+  // background-color: #1C202B;
+  max-height: 842px;
+
+  background-color: #e01a1a00;
+}
+
+span.report-detail-name {
+  text-shadow: 1.5px 1.5px black;
+}
+
+
+//흐림 배경 - 바이탈센서  (어둡게 수정)
+
+.breathSensorList.modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 0.75rem 0.9375rem;
+
+  background: url("../../images/dashboard/modal_background.png");
+  background-position: center;
+  border-radius: 0px 0px 20px 20px;
+}
+
+.report.form {
+  display: flex;
+  margin-left: 21px;
+}
+
+.report-dateTimeRange {
+  margin-top: 1rem;
+}
+
+.default-report-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.row.report-default {
+  display: flex;
+  width: 1478px;
+}
+
+.col-md-2.grid-margin.stretch-card.report-default.unAck,
+.col-md-2.grid-margin.stretch-card.report-detail.unAck {
+  min-width: 374px;
+  // background-color: #1A212A;
+}
+
+div#inquiry-modal {
+  min-height: 800px;
+  max-height: 800px;
+}
+
+.doorCameraArchive.form-group {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  margin: 0;
+}
+
+.modal-content.breathSensorList {
+
+  border-radius: 20px;
+  border: 1.5px solid #8E8E8e;
+  box-shadow: 5px 5px 15px 4px #000000;
+}
+
+.breathSensorListRows {
+  max-height: 803.83px;
+  overflow-y: auto;
+}
+
+.breathSensorList.modal-footer {
+  font-size: large;
+  background-color: #000000;
+}
+
+.vms-setting-confirm {
+  display: flex;
+  align-items: center;
+}
+
+span.alert-vms-update-cameraList {
+  margin-top: 0.15rem;
+}
+
+.grid-margin.stretch-card.breathSensorList {
+  background-color: #000000c9;
+  border-radius: 10px;
+}
+
+
+// 흐림 배경 - 데이터 조회
+
+.modal-content.accessCtlLog {
+  border-radius: 20px;
+  border: none;
+
+  background: url("../../images/dashboard/modal_background.png");
+  background-position: center;
+}

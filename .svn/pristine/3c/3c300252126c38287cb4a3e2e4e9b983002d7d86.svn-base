@@ -1,0 +1,65 @@
+.displayCamera {
+	margin: 0.75rem 0rem 0.75rem 0.5rem;
+	font-family: 'KorailRoundGothicBold';
+}
+
+.content {
+	border: 2px solid lightgray;
+	width: 80%;
+	margin: auto;
+	height: 30vh;
+	margin-top: 2vh;
+}
+
+.parkingCamera_tree {
+	height: 83%;
+	overflow-y: auto;
+	margin: 0rem 0.25rem;
+}
+
+.parkingCamera_tree::-webkit-scrollbar {
+	width: 9px;
+}
+
+.parkingCamera_tree::-webkit-scrollbar-thumb {
+	background-color: #2f3542;
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.parkingCamera_tree::-webkit-scrollbar-track {
+	background-color: grey;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+}
+
+.area_label {
+	display: flex;
+	margin: 0.5rem 0rem 0.25rem 1rem;
+	border-bottom: 1px solid lightslategray;
+	width: 85%;
+}
+
+.nodeDetail {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	justify-content: space-between;
+	width: 90%;
+}
+
+.areaDetail {}
+
+.spaceDetail {
+	margin-left: 0.5rem;
+}
+
+.removeIcon {
+	transition: transform ease-in 300ms;
+}
+
+.removeIcon:hover {
+	color: cornflowerblue;
+	transform: scale(1.1);
+}

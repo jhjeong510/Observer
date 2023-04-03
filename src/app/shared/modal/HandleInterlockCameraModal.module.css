@@ -1,0 +1,16 @@
+.form_control {
+  height: calc(2.25rem + 2px);
+  font-weight: normal;
+  font-size: 0.875rem;
+  padding: 0.625rem 0.6875rem;
+  color: #ffffff;
+  max-height: 963px;
+  border-radius: 20px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  background-color: #323232;
+  box-shadow: 2px 3px 8px 0px #000000bf;
+  text-align: center;
+  border: none;
+}

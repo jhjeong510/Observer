@@ -1,0 +1,138 @@
+const axios = require('axios');
+const { Client } = require('pg');
+const { format } = require('date-fns');
+const dbManager = require('../db/dbManager');
+
+let timerId;
+const pollingInterval = 30000;
+
+const collectGuardianliteInfo = async (idx, ipaddress) => {
+  try {
+    if (idx && ipaddress) {
+      // 가디언라이트에 http get 요청
+      const resGuardianlite = await axios.get(`http://${ipaddress}`);
+      if (resGuardianlite && resGuardianlite.data) {
+        // 문자열 형식의 응답을 채널별 특정문자로 분할
+        const arrSplit = resGuardianlite.data.split('<a href="?R');
+        const channel = [];
+        let temper;
+        // 9개로 분할된 문자열 배열에서 각 채널의 ON/OFF 상태 문자열 검출 및 장비 온도 검출
+        if (arrSplit.length >= 9) {
+          arrSplit.map((str, index) => {
+            if (index === 8) {
+              const indexChStart = str.indexOf(`${index}=`);
+              const indexChLast = str.indexOf(`">`);
+              const ch = str.substring(indexChStart+2,indexChLast);
+              channel.push(ch);
+  
+              const indexTemperStart = str.indexOf(`</table>`);
+              const indexTemperLast = str.indexOf('</h1>');
+              temper = str.substring(indexTemperStart+8,indexTemperLast);
+            } else if (index === 1) {
+              const indexChStart = str.indexOf(`=`);
+              const indexChLast = str.indexOf('">');
+              const ch = str.substring(indexChStart+1,indexChLast);
+              channel.push(ch);
+            } else if (index > 1) {
+              const indexChStart = str.indexOf(`${index}=`);
+              const indexChLast = str.indexOf(`">`);
+              const ch = str.substring(indexChStart+2,indexChLast);
+              channel.push(ch);
+            }
+          });
+  
+          if (channel.length >= 8 && temper) {      
+            //console.log(`guardianlite(${ipaddress}) ch1:${channel[0]}, ch2:${channel[1]}, ch3:${channel[2]}, ch4:${channel[3]}, ch5:${channel[4]}, temper:${temper}`);            
+            querySelect = `SELECT * FROM ob_guardianlite WHERE idx=${idx}`;
+            const resSelect = await dbManager.pgQuery(querySelect);
+            if (resSelect && resSelect.rows && resSelect.rows.length > 0){
+              const old = resSelect.rows[0];
+              if (old.ch1 !== channel[0] || old.ch2 !== channel[1] ||
+                old.ch3 !== channel[2] || old.ch4 !== channel[3] ||
+                old.ch5 !== channel[4] || old.ch6 !== channel[5] ||
+                old.ch7 !== channel[6] || old.ch8 !== channel[7] ||
+                old.temper !== temper) 
+              {
+                const queryString = `UPDATE "ob_guardianlite" SET 
+                  ch1='${channel[0]}', 
+                  ch2='${channel[1]}', 
+                  ch3='${channel[2]}', 
+                  ch4='${channel[3]}', 
+                  ch5='${channel[4]}', 
+                  ch6='${channel[5]}', 
+                  ch7='${channel[6]}', 
+                  ch8='${channel[7]}', 
+                  temper='${temper}',
+                  upserted_at=NOW()                  
+                  WHERE idx=${idx};`; 
+                  
+                const resUpdate = await dbManager.pgQuery(queryString);
+                //console.log(`guardianlite polling(${ipaddress}): ${resUpdate.rowCount} rows`);
+              }
+            }
+          } else {
+            console.log(`guardianlite 응답결과파싱값 오류: 파싱채널수 ${channel.length}, 온도값:${temper}`);
+          }
+        } else {
+          console.log(`guardianlite 응답결과 문자열 분할수 오류: split수 ${arrSplit.length.length}`);
+        }
+      } else {
+        console.log(`guardianlite get 응답값 이상: ${resGrdlte}`);
+      }
+    } else {
+      console.log(`collectGuardianliteInfo: 장비의 idx(${idx})나 ipaddress(${ipaddress})가 올바르지 않습니다.`);
+    }
+  } catch(err) {
+    console.log('collectGuardianliteInfo:', err);
+  }  
+}
+
+const pollingGuardianlite = async () => {
+  try {
+    // 전체 가디언라이트 장비 DB에서 읽기
+    const queryAll = `SELECT * FROM ob_guardianlite`;
+    const resAll = await dbManager.pgQuery(queryAll);
+    if (resAll && resAll.rows && resAll.rows.length > 0) {
+      resAll.rows.forEach(async (device) => {
+        await collectGuardianliteInfo(device.idx, device.ipaddress);
+      });
+    } else {
+      //console.log('등록된 가디언라이트 장비수:0개');
+    }
+    
+    // updated_at과 upserted_at 시간을 비교하여 변경된 내용이 있는지 확인
+    const queryStringDiff = `SELECT COUNT(*) AS cnt FROM "ob_guardianlite" WHERE updated_at != upserted_at;`;
+    const resDiff = await dbManager.pgQuery(queryStringDiff);
+    if (resDiff && resDiff.rows && resDiff.rows.length>0){
+      if (resDiff.rows[0].cnt > 0){
+        if (global.websocket) {
+          global.websocket.emit("guardianlite", { guardianlite: resDiff.rows[0].cnt });
+          //console.log('socket emit guardianlite');
+          
+          const queryUpsertTime = `UPDATE "ob_guardianlite" SET updated_at = upserted_at WHERE updated_at != upserted_at;`;
+          const resUpsertTime = await dbManager.pgQuery(queryUpsertTime);
+          //resUpsertTime.rowCount 값이 update 수행된 수
+          //console.log('socket emit & update result:', resUpsertTime);
+        }
+      }
+    }
+  } catch (error) {
+    console.log('polling guardianlite:', error);
+  }
+}
+
+exports.startDevicePolling = () => {
+  timerId = setInterval(() => {
+  //timerId = setTimeout(()=>{
+    const date = new Date();
+    //console.log('========================================================');
+    //console.log(`[${format(date, 'yyyy-MM-dd HH:mm:ss')}] 장비상태읽기 Polling`);
+    
+    pollingGuardianlite();
+
+  }, pollingInterval);
+}
+
+exports.stopDevicePolling = () => {
+  clearInterval(timerId);
+}

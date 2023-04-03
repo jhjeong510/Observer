@@ -1,0 +1,51 @@
+import React, { useEffect, useState, useRef } from 'react';
+import styles from './ParkingCameraStream.module.css';
+import testImage from '../../assets/images/test_parking_image.png';
+
+
+export default function ParkingCameraStream({ parkingCameras }) {
+
+	useEffect(() => {
+		console.log(parkingCameras.length);
+	})
+	return (
+		<>
+			{parkingCameras && parkingCameras.length === 0 ?
+				<div className={styles.wrap}>
+					카메라를 추가하세요.
+				</div>
+				:
+				parkingCameras && parkingCameras.length === 1 ?
+					<div className={styles.camArea}>
+						<div className={styles.camArea1}>
+							<div className={styles.camArea_}>
+								<img src={testImage} style={{ width: '560px', height: '315px', objectFit: 'fill' }}></img>
+							</div>
+						</div>
+					</div>
+					:
+				parkingCameras && parkingCameras.length > 1 ?
+					<div className={styles.wrap}>
+						<div className={styles.camArea}>
+							<div className={styles.camArea1}>
+								<div className={styles.camArea_}>
+									<img src={testImage} style={{ width: '560px', height: '315px', objectFit: 'fill' }}></img>
+								</div>
+							</div>
+						</div>
+
+						<div className={styles.camArea}>
+							<div className={styles.camArea2}>
+								<div className={styles.camArea_}>
+									영역2
+								</div>
+							</div>
+						</div>
+					</div>
+					:
+				''
+			}
+		</>
+	);
+
+}

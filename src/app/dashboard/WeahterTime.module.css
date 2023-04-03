@@ -1,0 +1,17 @@
+@font-face {
+  font-family: 'KorailRoundGothicBold';
+  src: local('KorailRoundGothicBold'), url('../font/Korail_Round_Gothic_Bold.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+.weatherTime {
+  display: flex;
+  position: relative;
+  right: -24.5%;
+  font-size: 1.5rem;
+
+  text-shadow: 1px 1px #ffffff;
+  color: #000000;
+  -webkit-text-stroke: 1px #7c7c7c;
+}

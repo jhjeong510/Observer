@@ -1,0 +1,138 @@
+@font-face {
+  font-family: 'GangwonEduPowerExtraBoldA';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduPowerExtraBoldA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'KorailRoundGothicBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KorailRoundGothicBold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+.navbar {
+  position: absolute;
+  background: transparent;
+  z-index: 100;
+  width: 100%;
+  height: 3.85rem;
+  font-family: 'KorailRoundGothicBold';
+
+}
+
+.navbar_wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 1rem;
+  width: 100%;
+}
+
+.observer_title {
+  margin-left: 0;
+  margin-top: 1rem;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+.observer_title h2{
+  text-shadow: 2px 2px #1c1c1c;
+}
+
+.navbar_menu {
+    position: absolute;
+    top: 93.6vh;
+    left: 10.2%;
+    width: 15.5%;
+    height: 6vh;
+    display: flex;
+    align-items: center;
+    background-color: #000000b8;
+    border-radius: 10px;
+    margin-left: 88.6rem;
+    border: 1px solid #a7a7a7;
+    box-shadow: 2px 2px 10px 3px black, inset 2px 3px 14px -4px #e0dede; 
+    margin-top: -1px;
+}
+
+
+
+
+.breathSensorList {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 2.8rem;
+  color: #000000d5;
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 0 0.6rem;
+  cursor: pointer;
+  box-shadow: 2px 2px 7px 2px black, inset 0.5px 0.5px 3px 3px #0000005c;
+}
+
+.navbar_items {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 0;
+  /* margin-left: -102px; */
+  margin-left: -8px;
+
+}
+
+.view_dashboard,
+.inquiry_data,
+.report,
+.setting {
+  color: #000;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  padding: 0 0.6rem;
+  font-size: 1.75rem;
+  cursor: pointer;
+  box-shadow: 2px 2px 7px 2px black, inset 0.5px 0.5px 3px 3px #0000005c;
+}
+
+.login_dropDown {
+  /* display: flex;
+  width: 8rem; */
+  display: flex;
+  width: 7.5rem;
+  top: -13px;
+
+}
+
+.loginId {
+  display: flex;
+  margin-bottom: 0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.profile {
+  display: flex;
+  align-items: flex-end;
+  font-size: 1.1rem;
+  margin-left: 7px;
+}
+
+.login_dropDown_toggle {
+  display: flex;
+  cursor: pointer;
+  transition: transform 300ms ease-in-out;
+}
+
+.login_dropDown_toggle:hover {
+  transform: scale(1.01);
+  color: #e0e0e0;
+}
+
+.login_dropDown_toggle:after {
+  display: none;
+}

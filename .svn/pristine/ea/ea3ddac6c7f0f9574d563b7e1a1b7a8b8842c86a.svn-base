@@ -1,0 +1,80 @@
+.displayCamera {
+    margin: 0.75rem 0rem 0.75rem 0.5rem;
+    font-weight: 800;
+    font-size: larger;
+    top: 163px;
+    position: fixed;
+    margin-left: 0.8rem;
+}
+
+.content {
+    width: 80%;
+    margin: auto;
+    height: 34vh;
+    margin-top: 4.5vh;
+    border-radius: 0.5rem;
+    border: 1.5px solid transparent;
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    background-image: linear-gradient(#000000, #000000), linear-gradient(139deg, #949494, #484848, #949494);
+}
+
+.parkingCamera_tree {
+	height: 83%;
+	overflow-y: auto;
+	margin: 0rem 0.25rem;
+}
+
+.parkingCamera_tree::-webkit-scrollbar {
+	width: 9px;
+}
+
+.parkingCamera_tree::-webkit-scrollbar-thumb {
+	background-color: #2f3542;
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.parkingCamera_tree::-webkit-scrollbar-track {
+	background-color: grey;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+}
+
+.area_label {
+	display: flex;
+    margin: 0.5rem 0rem 0.25rem 1rem;
+    width: 90%;
+    font-weight: 700;
+    font-size: larger;
+    padding-bottom: 5px;
+    border-bottom: 1.5px solid #4e4e4e;
+    text-align: center;
+    border-image: linear-gradient(to right, #262525 0%, #aaa7a7, #2c2c2c 100%);
+    border-image-slice: 1;
+}
+
+
+.nodeDetail {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	justify-content: space-between;
+	width: 90%;
+	height: 100%;
+	margin-left: 0.25rem;
+}
+
+.spaceDetail {
+	margin-left: 0.5rem;
+}
+
+.removeIcon {
+	transition: transform ease-in 300ms;
+}
+
+.removeIcon:hover {
+	color: cornflowerblue;
+	transform: scale(1.1);
+}

@@ -1,0 +1,178 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	text-align: center;
+}
+
+.wrap {
+	max-width: 75rem;
+	margin: 0;
+}
+
+h3 {
+	padding: 20px 0;
+	font-size: 30px;
+	color: #fff;
+}
+
+.cameras_box {
+	display: flex;
+	align-items: center;
+}
+
+.camArea {
+	/* padding: 60px; */
+	margin: 10px;
+	/* font-size: 20px; */
+	/* text-align: center; */
+}
+
+.camArea1 {
+	width: 560px;
+	height: 315px;
+	margin-top: 3.5rem;
+	max-height: 315px;
+}
+
+.camArea2 {
+	width: 560px;
+	height: 315px;
+	margin-top: 3.5rem;
+	max-height: 315px;
+}
+
+@media(min-width: 700px) {
+	.wrap {
+		display: flex;
+		height: 28rem;
+	}
+
+	.camArea_ {
+		flex: 1;
+	}
+}
+
+.loading {
+	position: relative;
+	top: 9.5vh;
+	left: 13vw;
+}
+
+
+.loading_large {
+	position: relative;
+	top: 30vh;
+	left: 28vw;
+}
+
+.video {
+	/* width: 30vw;
+	height: 33.4365322vh; */
+
+	width: 29vw;
+	height: 32.4365322vh;
+
+	/* width: 29.7vw;
+	height: 34vh; */
+	margin: auto;
+	box-shadow: 3px 3px 9px 4px black;
+	border-radius: 0.5rem;
+	border: 1.5px solid transparent;
+	background-origin: border-box;
+	background-clip: content-box, border-box;
+	background-image: linear-gradient(#000000, #000000), linear-gradient(316deg, #aaaaaa, #272728, #aaaaaa);
+	margin-top: -55px;
+}
+
+.video_large {
+	/* 기존 코드 */
+	/* display: flex;
+	width: 55vw;
+	height: 61.300309vh;
+	margin: auto; */
+
+	display: flex;
+	width: 60vw;
+	height: 67.3003029vh;
+	margin: auto;
+	position: fixed;
+
+	/* 영상 css */
+	display: flex;
+	margin: auto;
+	box-shadow: 3px 3px 9px 4px black;
+	border-radius: 0.5rem;
+	border: 1.5px solid transparent;
+	background-origin: border-box;
+	background-clip: content-box, border-box;
+	background-image: linear-gradient(#000000, #000000), linear-gradient(316deg, #aaaaaa, #272728, #aaaaaa);
+	/* width: 1154px;
+    height: 760px;
+    margin-top: -110px;*/
+}
+
+
+.parentDiv {
+	position: relative;
+	width: 100%;
+}
+
+.parentDiv_all {
+	position: relative;
+	width: 50%;
+	height: 33.4365322vh;
+}
+
+.childDiv {
+	position: relative;
+	display: flex;
+	width: 60vw;
+	height: 67.3003029vh;
+	margin: 0;
+}
+
+.childDiv_all {
+	position: relative;
+	display: flex;
+	width: 29vw;
+	height: 32.4365322vh;
+	margin: 0;
+	top: -32.4365322vh;
+}
+
+.delete_btn {
+	/* text-align: center;
+	padding: 0.2rem 0.4rem;
+	border-radius: 0.5rem; */
+	position: fixed;
+	top: 15vh;
+	right: 27.6vw;
+	cursor: pointer;
+	text-align: center;
+	padding: 0.2rem 0.4rem;
+	border-radius: 0.5rem;
+	font-weight: 700;
+	text-shadow: 1px 1px #eae7e7;
+	color: #101010;
+	background: linear-gradient(133deg, #424242 -10%, #c2c2c2 30%, #c2c2c3 60%, #424242);
+	border: 1.5px solid #bbbaba;
+	box-shadow: 1px 1px 3px 1px black;
+	margin-top: 8px;
+	margin-left: -0.5rem;
+}
+
+.delete_btn:hover {
+	box-shadow: 0px 0px 2px 2.2px #a9c3d3;
+	border: 1.5px solid #474646;
+}
+
+.delete_btn:active {
+	background: linear-gradient(133deg, #000000 -10%, #494848 30%, #787878 60%, #101010);
+	text-shadow: 1px 1px #252525;
+	border: 1.5px solid #0b0b0b;
+	box-shadow: 0px 0px 2px 2.2px #4f4f4f;
+	color: #b1b1b1;
+}

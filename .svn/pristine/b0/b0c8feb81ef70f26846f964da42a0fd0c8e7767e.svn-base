@@ -1,0 +1,37 @@
+import React, { useEffect, useState } from 'react';
+import { Table } from 'react-bootstrap';
+import ParkingType from './ParkingType';
+
+export default function ParkingInfo() {
+	const [typeList, setTypeList] = useState([]);
+	let parking_type = [];
+
+	useEffect(() => {
+		parking_type = Object.entries(ParkingType);
+		setTypeList(parking_type)
+	}, () => console.log(typeList))
+
+	return (
+		<>
+			<Table style={{ width: '22rem' }} striped bordered className='LEFTBREATH' >
+				<thead style={{ height: '2.4rem', width: '22rem', borderTop: 'thin solid #4b4747' }}>
+					<tr>
+						<th style={{ width: '15rem', textAlign: 'center', backgroundColor: '#242323', marginLeft: '2px' }}>타입</th>
+						<th style={{ width: '7rem', textAlign: 'center', backgroundColor: '#242323', marginLeft: '2px' }}>남은자리</th>
+					</tr>
+				</thead>
+				{typeList && typeList !== undefined && typeList.map((type, index) => {
+					return (
+						<tbody key={index}>
+							<tr>
+								<td key={index} style={{ width: '15rem', textAlign: 'center', backgroundColor: `${type[1].color}`, color: '#ebe6e6' }}>{type[1].type_name}</td>
+								<th style={{ width: '7rem', textAlign: 'center', color: '#ebe6e6' }}>occupancy</th>
+							</tr>
+						</tbody>
+					)
+				})
+				}
+			</Table>
+		</>
+	)
+}

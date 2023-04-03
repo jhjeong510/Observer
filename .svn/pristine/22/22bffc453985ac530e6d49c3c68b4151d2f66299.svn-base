@@ -1,0 +1,38 @@
+import React, { useEffect, useState, useRef } from 'react';
+import styles from './ParkingCameraStream.module.css';
+import testImage from '../../assets/images/test_parking_image.png';
+import ParkingCameraStream from './ParkingCameraStream';
+
+
+export default function ParkingCamera({ parkingCameras, parkingCamera, socketClient, socketCameraRef, handleConnectSocket, handleDisconnectSocket }) {
+
+	useEffect(() => {
+		return () => {
+			console.log('unmount');
+		}
+	}, [])
+
+	if (parkingCameras) {
+		return parkingCameras.map((parkingCamera) => {
+			return <div key={parkingCamera.idx}>
+				<ParkingCameraStream
+					cameraId={parkingCamera.camera_id}
+					socket={socketClient}
+					socketCameraRef={socketCameraRef}
+					handleConnectSocket={handleConnectSocket}
+					handleDisconnectSocket={handleDisconnectSocket}
+				/>
+			</div>
+		})
+	} else if (parkingCamera) {
+		return <div>
+			<ParkingCameraStream
+				cameraId={parkingCamera.camera_id}
+				socket={socketClient}
+				socketCameraRef={socketCameraRef}
+				handleConnectSocket={handleConnectSocket}
+				handleDisconnectSocket={handleDisconnectSocket}
+			/>
+		</div>
+	}
+}

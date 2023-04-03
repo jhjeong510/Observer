@@ -1,0 +1,24 @@
+.crowd_density_camera_title {
+	font-weight: 700;
+	font-size: large;
+	position: fixed;
+	top: 11vh;
+	border-radius: 6px;
+	border: 1.2px solid transparent;
+	background-origin: border-box;
+	background-clip: content-box, border-box;
+	background-image: linear-gradient(#4e4e4e, #000000), linear-gradient(208deg, #383838 10%, #b9b9b9 80%, #595757);
+	width: 9%;
+	height: 3.5%;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	letter-spacing: 0.2rem;
+	margin-bottom: 0;
+}
+
+.btn_menu {
+	position: relative;
+	top: -2.55vh;
+	left: 13vw;
+}

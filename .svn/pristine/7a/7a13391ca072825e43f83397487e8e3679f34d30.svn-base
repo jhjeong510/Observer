@@ -1,0 +1,128 @@
+export default async function ShowDevicePopUp(objectDetail, canvas, popUpType) {
+  if (canvas && canvas.id === undefined) {
+    const { positionX, positionY, indication_line } = await handlePosition(objectDetail, popUpType);
+    return {
+      popUpType,
+      position: { x: positionX, y: positionY },
+      clientHeight: objectDetail.e.target.clientHeight,
+      clientWidth: objectDetail.e.target.clientWidth,
+      device_id: objectDetail.target.data.device_id,
+      cameraId: objectDetail.target.data.camera_id,
+      deviceName: objectDetail.target.data.name,
+      ipaddress: objectDetail.target.data.ipaddress,
+      buildingName: objectDetail.target.data.buildingName,
+      floorName: objectDetail.target.data.floorName,
+      location: objectDetail.target.data.location,
+      type: objectDetail.target.data.type,
+      serviceType: objectDetail.target.data.service_type,
+      indication_line
+    };
+  }
+}
+
+const handlePosition = async (objectDetail, popUpType) => {
+  let positionX;
+  let positionY;
+  let indication_line = 'default';
+  let moveLeft;
+  let moveTop;
+  if (objectDetail.target.data.type !== 'pids' && objectDetail.target.data.type !== 'breathSensor') {
+    const { left, top, width, height } = objectDetail.target;
+    if (((left + width + (objectDetail.e.target.clientWidth * 0.159375)) >= objectDetail.e.target.clientWidth)) {
+      console.log((left + (width / 2) + (objectDetail.e.target.clientWidth * 0.159375)));
+      positionX = (left + (width / 2) - (objectDetail.e.target.clientWidth * 0.209375));
+      moveLeft = true;
+    } else {
+      console.log((((left + width) / 2) + 400));
+      positionX = (left + width + (objectDetail.e.target.clientWidth * 0.02));
+    }
+    if (popUpType === 'optionCamera') {
+      if ((top + (height / 2) + (objectDetail.e.target.clientHeight * 0.0769969)) >= objectDetail.e.target.clientHeight) {
+        positionY = (top - objectDetail.e.target.clientHeight * 0.035);
+        moveTop = true;
+      } else {
+        positionY = (top);
+      }
+    } else if (popUpType === 'onlyCamera') {
+      if ((top + (height / 2) + (objectDetail.e.target.clientHeight * 0.2125903)) >= objectDetail.e.target.clientHeight) {
+        positionY = (top - (objectDetail.e.target.clientHeight * 0.175));
+        moveTop = true;
+      } else {
+        positionY = (top);
+      }
+    }
+    if (moveLeft && moveTop) {
+      indication_line = 'left_top';
+    } else if (moveLeft && !moveTop) {
+      indication_line = 'left';
+    } else if (!moveLeft && moveTop) {
+      indication_line = 'top';
+    }
+  } else if (objectDetail.target.data.type === 'pids') {
+    const { top, left, width, height, x1, x2, y1, y2 } = objectDetail.target;
+    if (objectDetail.target.text_top && objectDetail.target.text_left) {
+      if (((((parseFloat(x2) + parseFloat(x1)) / 2) + (objectDetail.e.target.clientWidth * 0.03) + (objectDetail.e.target.clientWidth * 0.159375)) >= objectDetail.e.target.clientWidth)) {
+        positionX = (((parseFloat(x2) + parseFloat(x1)) / 2) - (objectDetail.e.target.clientWidth * 0.189375));
+        moveLeft = true;
+      } else {
+        positionX = (((parseFloat(x2) + parseFloat(x1)) / 2) + (objectDetail.e.target.clientWidth * 0.03));
+      }
+      if (popUpType === 'optionCamera') {
+        if ((((parseFloat(y2) + parseFloat(y1)) / 2) + (objectDetail.e.target.clientHeight * 0.0769969)) >= objectDetail.e.target.clientHeight) {
+          positionY = (((parseFloat(y2) + parseFloat(y1)) / 2) - objectDetail.e.target.clientHeight * 0.05);
+          moveTop = true;
+        } else {
+          positionY = ((parseFloat(y2) + parseFloat(y1)) / 2) - objectDetail.e.target.clientHeight * 0.03;
+        }
+      } else if (popUpType === 'onlyCamera') {
+        if ((((parseFloat(y2) + parseFloat(y1)) / 2) + (objectDetail.e.target.clientHeight * 0.2125903)) >= objectDetail.e.target.clientHeight) {
+          positionY = (((parseFloat(y2) + parseFloat(y1)) / 2) - (objectDetail.e.target.clientHeight * 0.19));
+          moveTop = true;
+        } else {
+          positionY = ((parseFloat(y2) + parseFloat(y1)) / 2) - objectDetail.e.target.clientHeight * 0.03;
+        }
+      }
+      if (moveLeft && moveTop) {
+        indication_line = 'left_top';
+      } else if (moveLeft && !moveTop) {
+        indication_line = 'left';
+      } else if (!moveLeft && moveTop) {
+        indication_line = 'top';
+      }
+    } else {
+      if (((left + width + (objectDetail.e.target.clientWidth * 0.159375)) >= objectDetail.e.target.clientWidth)) {
+        positionX = (left - (objectDetail.e.target.clientWidth * 0.192375));
+        moveLeft = true;
+      } else {
+        positionX = (left + width + (objectDetail.e.target.clientWidth * 0.03));
+      }
+      if (popUpType === 'optionCamera') {
+        if (((top + (height / 2)) + (objectDetail.e.target.clientHeight * 0.07080495)) >= objectDetail.e.target.clientHeight) {
+          positionY = ((top + (height / 2)) - (objectDetail.e.target.clientHeight * 0.07080495));
+          moveTop = true;
+        } else {
+          positionY = ((top + (height / 2)) - (objectDetail.e.target.clientHeight * 0.03));
+        }
+      } else if (popUpType === 'onlyCamera') {
+        if (((top + (height / 2)) + (objectDetail.e.target.clientHeight * 0.2125903)) >= objectDetail.e.target.clientHeight) {
+          positionY = ((top + (height / 2)) - (objectDetail.e.target.clientHeight * 0.2125903));
+          moveTop = true;
+        } else {
+          positionY = ((top + (height / 2)) - (objectDetail.e.target.clientHeight * 0.03));
+        }
+      }
+      if (moveLeft && moveTop) {
+        indication_line = 'left_top';
+      } else if (moveLeft && !moveTop) {
+        indication_line = 'left';
+      } else if (!moveLeft && moveTop) {
+        indication_line = 'top';
+      }
+    }
+  }
+  return {
+    positionX,
+    positionY,
+    indication_line
+  }
+}

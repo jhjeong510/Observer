@@ -1,0 +1,90 @@
+import React, { useEffect, useState } from 'react';
+import ParkingType from './ParkingType';
+import parking_all from '../../assets/icon/parking_all.png';
+import { getParkingSpace } from './api/apiService';
+import * as dateFns from "date-fns";
+import { ko } from 'date-fns/locale';
+import MoreTextInfo from '../shared/section/section/MoreTextInfo';
+import styles from './ParkingEventList.module.css'
+import not_parking from '../../assets/icon/not_parking.png';
+import { getEventsList } from './api/apiService';
+
+export default function ParkingInfo({ eventListUpdate }) {
+	const [eventList, setEventList] = useState([]);
+
+	const getEvents = async () => {
+		const res = await getEventsList('parkingcontrol', 'noLimit');
+		const parkingEvent = [];
+		if (res && res.eventList && res.eventList.length > 0) {
+			res.eventList.map((evt) => {
+				parkingEvent.push(evt);
+			})
+		}
+		// await setEventList(parkingEvent.sort((a, b) => (dateFns.parseISO(a.event_occurrence_time) - dateFns.parseISO(b.event_occurrence_time) < 0)));
+		await setEventList(parkingEvent);
+	}
+	
+	useEffect(() => {
+		getEvents();
+		const eventListSubscription = getEvents();
+		return () => {
+			if (eventListSubscription && typeof eventListSubscription.cancel === 'function') {
+				eventListSubscription.cancel();
+			}
+		};
+	}, [eventListUpdate]);
+
+	const handleSettingIcon = (eventType) => {
+		switch (eventType) {
+			case 35:
+				return not_parking;
+			default:
+				break;
+		}
+	}
+
+	return (
+		<>
+			<div className={styles.menu_eventList}>
+				<div>
+					<div className={styles.eventList_header}>
+						<h5 className={styles.header}>주차 이벤트 리스트</h5>
+					</div>
+				</div>
+				<div className={styles.parking_event} >
+					{eventList && eventList.length > 0 ?
+						eventList.map((event, index) => {
+							return (
+								<div key={index}>
+									<div className={styles.preview_item}>
+										<div className={styles.eventInfo}>
+											<div className={styles.eventIcon}>
+												{
+													event.event_type === 35 ?
+														<img src={handleSettingIcon(event.event_type)} className={styles.parking_event_icon_backgroundColor}></img>
+														:
+														<span className={styles.parking_event_icon_backgroundColor_FULL}>FULL</span>
+												}
+											</div>
+											<div className={styles.event_text_info}>
+												<h5 className={styles.event_text_info_name}>
+													{event.name}{'(' + event.ipaddress + ')'}
+												</h5>
+												<div className={styles.event_text_info_detail}>
+													<span className={styles.event_text_info_description}>위치: {event.description && event.description.length > 33 ? <MoreTextInfo textInfo={event.description} setBottom /> : event.description}</span>
+													{event.event_occurrence_time ? <span className={styles.event_text_info_occurTime} style={{ width: '300px' }}>발생시간: {dateFns.format(dateFns.parseISO(event.event_occurrence_time), "yyyy년 M월 d일 E요일 HH시 mm분", { locale: ko })}</span> : ''}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							)
+						})
+						:
+						<span className={styles.unAck_eventList_empty}>미확인 이벤트가 없습니다.</span>
+					}
+				</div>
+			</div>
+		</>
+	)
+}

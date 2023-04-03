@@ -1,0 +1,158 @@
+@keyframes blink {
+  50% {
+    border-color: rgba(90, 94, 86, 0.5);
+  }
+}
+
+.eventListHeader {
+  display: flex;
+  height: 4.128vh;
+  background: linear-gradient(147deg, #000000, #3e3e3e);
+  border-radius: 5% 5% 0px 0px;
+}
+
+.realtimeEvents {
+  height: 43vh;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  min-height: 41px;
+  max-height: 809px;
+  backdrop-filter: blur(5px);
+  border-radius: 20px;
+  border: 1.5px solid #d8d8d8;
+  box-shadow: 4px 4px 14px 3.5px black;
+}
+
+.eventListTitleAndMore {
+  display: flex;
+  width: 450%;
+}
+
+.eventListTitle {
+  display: flex;
+  width: 400%;
+  padding: 0.65rem 0.5rem 0.6rem 0.7rem;
+  margin: 0;
+  height: 2.5rem;
+  font-size: 1rem;
+  margin-left: 6px;
+  margin-top: 2px;
+}
+
+.eventListOrder_list {
+  display: flex;
+  width: 100%;
+}
+
+.eventListOrder_list:hover {
+  background: rgba(54, 71, 58, 0.67);
+}
+
+.eventListOrder_list.dropdown {
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+.list {
+  height: 38vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.list::-webkit-scrollbar {
+  width: 13px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+.list::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+
+.eventListDetail {
+  /* background-color: #0000008a; */
+  background-color: #00000099;
+  border-radius: 10px;
+  margin: 0.25rem;
+
+  /* 리스트 배경 수정 */
+  /* background-color: #00000069;
+    border-radius: 10px;
+    margin: 0.25rem;
+    text-shadow: 3px 3px black;
+    box-shadow: inset 2px 2px 22px 1px black; */
+}
+
+.eventListDetail_onSelect {
+  /* background-color: #0000008a; */
+  background-color: #00000099;
+
+  border: #f0ec23 2px solid;
+  border-radius: 10px;
+  margin: 0.25rem
+}
+
+.eventListDetail_isLast {
+  background-color: #00000099;
+  border: 3px solid #b95918;
+  border-radius: 5px;
+  animation: blink 1s;
+  animation-iteration-count: 20;
+}
+
+.eventDetail {
+  margin-bottom: 0;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.eventInfo {
+  flex-grow: 1;
+  margin: 1px 0px 5px 6px;
+  padding-right: 3px;
+  min-width: 198%;
+}
+
+.handleDisplayMenu {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.handleDisplayMenu:hover,
+.handleDisplayMenu:active {
+  background: rgba(54, 71, 58, 0.67);
+}
+
+.handleSettingComponent {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  border: none;
+}
+
+.handleSettingComponent:hover,
+.handleSettingComponent:active {
+  background: rgba(54, 71, 58, 0.67);
+}
+
+.preview2-item border-bottom {
+  border-radius: 10px;
+  background-color: #0000008c;
+  margin: 2px 4px 0px 4px;
+
+  border: none;
+}
+
+.eventlist_modal {
+  background-color: #00d25b;
+}

@@ -1,0 +1,32 @@
+.close {
+  text-decoration: none;
+  position: absolute;
+  color: rgb(192, 192, 192);
+  top: 2px;
+  right: 8px;
+  padding: 0.3rem;
+}
+
+.close:after {
+  content: "✖";
+  color: rgb(291, 291, 291);
+}
+
+.form_group {
+  display: flex;
+  align-items: center;
+}
+
+.label {
+  width: 50%;
+  margin: 0;
+}
+
+.input_box {
+  display: flex;
+  width: 100%;
+}
+
+.crowd_density_input {
+  width: 10vw;
+}

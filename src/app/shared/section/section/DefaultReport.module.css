@@ -1,0 +1,24 @@
+.unAck_value {
+    position: absolute;
+    top: 42%;
+    left: 74%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.unAck_value_ndoctor {
+    position: relative;
+    top: 11vh;
+    right: 35%;
+}
+
+.unAck_label {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    width: 3.5vw;
+    width: 4vw;
+    font-size: 1.6rem;
+    margin: 0;
+}

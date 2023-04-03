@@ -1,0 +1,223 @@
+.react-datepicker-popper {
+    z-index: 12345678901;
+}
+
+.react-datepicker {
+    display: block;
+    border: none;
+    background-color: transparent;
+
+    .react-datepicker-popper & {
+        background-color: $white;
+        border: 1px solid $border-color;
+    }
+
+    .react-datepicker__navigation {
+        &.react-datepicker__navigation--previous {
+            &::before {
+                content: "<<";
+            }
+        }
+
+        &.react-datepicker__navigation--next {
+            &::before {
+                content: ">>";
+            }
+        }
+    }
+
+    .react-datepicker__month-container {
+        float: none;
+
+        .react-datepicker__header {
+            border-bottom: none;
+            background-color: transparent;
+
+            .react-datepicker__current-month {
+                color: color(gray);
+            }
+
+            .react-datepicker__day-names {
+                display: flex;
+                justify-content: space-around;
+
+                .react-datepicker__day-name {
+                    padding: 0.5rem 0;
+                    color: color(gray);
+                }
+            }
+        }
+
+        .react-datepicker__month {
+            .react-datepicker__week {
+                display: flex;
+                justify-content: space-around;
+
+                .react-datepicker__day {
+                    padding: 0.5rem 0;
+                    color: color(gray);
+
+                    &.react-datepicker__day--selected,
+                    &.react-datepicker__day--today {
+                        background-color: transparent;
+                        position: relative;
+                        z-index: 1;
+
+                        &::before {
+                            content: "";
+                            width: 38px;
+                            height: 38px;
+                            background: theme-color(success);
+                            border-radius: 100%;
+                            display: block;
+                            position: absolute;
+                            z-index: -1;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+                    }
+
+                    &.react-datepicker__day--today {
+                        color: $white;
+                        font-weight: normal;
+
+                        &::before {
+                            background: theme-color(info);
+                        }
+                    }
+
+                    &.react-datepicker__day--outside-month {
+                        color: $white;
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+.daterange-picker {
+    display: flex;
+
+    @media (max-width: 576px) {
+        display: block;
+    }
+
+    .react-datepicker-wrapper {
+
+        // flex-grow: 1;
+        @media (max-width: 576px) {
+            width: 100%
+        }
+    }
+
+    .range-seperator {
+        margin: auto 2rem;
+
+        @media (max-width: 576px) {
+            width: 40px;
+            display: block;
+            text-align: center;
+            margin: 1rem auto;
+        }
+    }
+}
+
+.daterange-picker.allEvents {
+    margin-bottom: 5px;
+}
+
+.daterange-picker.report-event {
+    margin-left: 6rem;
+    margin-bottom: 5px;
+    justify-content: center;
+}
+
+.card-body.events.datePicker {
+    display: flex;
+    margin-right: 1rem;
+    margin-top: 0.4rem;
+    padding: 0;
+}
+
+.card-body.events.datePicker.breathScheduleSetting {
+    display: flex;
+}
+
+.card-body.report.datePicker {
+    display: flex;
+    flex-direction: column;
+    max-width: 340px;
+    margin-right: 1rem;
+    padding: 0;
+}
+
+.range-seperator-datePicker {
+    margin: auto 0.5rem;
+    font-size: medium;
+    font-weight: bold;
+}
+
+.form-control.groupSelect {
+    width: 100%;
+    font-weight: 400;
+    color: #8d8d8d;
+}
+
+input.form-control.datePicker {
+    width: 120px;
+    margin-right: 0.5rem;
+}
+
+//보고서 모달 창 시간 입력 칸
+input.form-control.TimePicker {
+    // width: 92px;
+    // margin-right: 0;
+    // background-color: #76111161;
+
+
+    width: 92px;
+    margin-right: 0;
+    border-radius: 20px;
+    background-color: #323232;
+    border: none;
+    // box-shadow: 2px 2px 6px 2px #000000ad, inset 1px 1px 8px 1px #b9b9b9;
+}
+
+input.form-control.TimePicker.Schedule {
+    width: 90px;
+    margin-right: 0;
+}
+
+input.form-control.report-datePicker {
+    width: 105px;
+    margin-right: 0.5rem;
+    // font-family: 'KorailRoundGothicBold';
+    font-weight: 700;
+}
+
+input.form-control.report-TimePicker {
+    width: 92px;
+    margin-right: 0;
+    // font-family: 'KorailRoundGothicBold';
+    font-weight: 700;
+
+}
+
+.card-body.car-recognition.datePicker {
+    display: flex;
+}
+
+p.card-description.car-recognition.datePicker {
+    display: flex;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    margin-right: 1rem;
+}
+
+p.card-description.car-recognition-camera {
+    display: flex;
+    align-items: center;
+    margin: 0 1rem 0 0;
+}

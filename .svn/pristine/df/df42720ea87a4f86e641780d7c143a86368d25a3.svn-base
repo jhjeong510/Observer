@@ -1,0 +1,31 @@
+import React, { useState } from 'react';
+import { Button } from 'react-bootstrap';
+import CrowdDensityThresholdModal from '../shared/modal/CrowdDensityThresholdModal';
+import styles from './CrowdDensityCameraDetail.module.css';
+import { handleCloseContext } from './handlers/ContextMenuHandler';
+
+export default function CrowdDensityCameraDetail({ crowdDensityCamera: { name, threshold, idx } }) {
+
+  const [crowdDensityThresholdModal, setCrowdDensityThresholdModal] = useState({ show: false, title: '', message: '' });
+
+  const handleShowSetThreshold = () => {
+    setCrowdDensityThresholdModal({ show: true, title: '임계치 설정' });
+    handleCloseContext();
+  }
+
+  return (
+    <div>
+      <h4 className={styles.crowd_density_camera_title}>{name}</h4>
+      <div className={styles.btn_menu}>
+        <button className={styles.name_edit_btn}>
+          <i className="fa fa-edit"></i>
+        </button>
+        <button className={styles.delete_btn}>
+          <i className='mdi mdi-delete-forever'></i>
+        </button>
+        <Button onClick={handleShowSetThreshold}>임계치 설정</Button>
+      </div>
+      {crowdDensityThresholdModal.show ? <CrowdDensityThresholdModal show={crowdDensityThresholdModal.show} setShow={setCrowdDensityThresholdModal} message={crowdDensityThresholdModal.message} title={crowdDensityThresholdModal.title} threshold={threshold} idx={idx} /> : null}
+    </div>
+  )
+}

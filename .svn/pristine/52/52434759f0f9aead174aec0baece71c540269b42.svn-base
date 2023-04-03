@@ -1,0 +1,110 @@
+import React, { useState, useEffect } from 'react';
+import { Line } from 'react-chartjs-2';
+
+export default React.memo(function CrowdDensityChart({ selectedCameraId, crowdDensityCountingLog, crowdDensityCameraId }) {
+    const [newFilteringData, setNewFilteringData] = useState([]);
+    const [chartData, setChartData] = useState([]);
+    const height = '180px';
+    const width = '1100px';
+    const chartStyle = { zIndex: '10000', height, width };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (crowdDensityCountingLog && crowdDensityCameraId) {
+                const filterData = await crowdDensityCountingLog.filter((log) =>
+                    crowdDensityCameraId.includes(log.camera_channel)
+                );
+                setNewFilteringData(filterData);
+            }
+        };
+        fetchData();
+    }, [crowdDensityCountingLog, crowdDensityCameraId]);
+
+    useEffect(() => {
+        if (newFilteringData.length === 0) {
+            return;
+        }
+
+        const getCountingLog = async () => {
+            try {
+                const maxDataLength = 60;
+                const selectedCameraIds = Array.isArray(selectedCameraId) ? selectedCameraId : [selectedCameraId];
+                const chartDataArray = selectedCameraIds.map((cameraId) => {
+                    const cameraFilterData = newFilteringData.filter((item) => item.camera_channel === cameraId);
+                    if (cameraFilterData.length === 0) {
+                        return null;
+                    }
+                    const threshold = cameraFilterData[0].threshold;
+                    const labels = cameraFilterData.map((item) => {
+                        const labelTime = item.datetime.substring(9, item.datetime.length);
+                        const timeArray = [labelTime.slice(0, 2), labelTime.slice(2, 4), labelTime.slice(4, 6)];
+                        const timeString = timeArray.join(':');
+                        return timeString;
+                    }).reverse().slice(-maxDataLength);
+                    const dataPoints = cameraFilterData.map((item) => item.count_average).reverse().slice(-maxDataLength);
+                    const thresholdData = cameraFilterData.map((item) => item.threshold).slice(-maxDataLength);
+                    const data = {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: '군중감지',
+                                data: dataPoints,
+                                backgroundColor: ['rgba(255, 99, 132, 0.8)'],
+                                borderColor: ['rgba(255, 99, 132, 1)'],
+                                borderWidth: 0.3,
+                            },
+                            {
+                                label: `임계치(${threshold ? threshold : ''})`,
+                                data: thresholdData,
+                                borderColor: ['white'],
+                                borderWidth: 0.5,
+                            },
+                        ],
+                    };
+                    return data;
+                });
+                setChartData(chartDataArray);
+            } catch (err) {
+                console.error('crowddensity chart component err: ', err);
+            }
+        };
+
+        getCountingLog();
+    }, [newFilteringData]);
+
+    const options = {
+        responsive: true,
+        scales: {
+            yAxes: [
+                {
+                    ticks: {
+                        min: 0,
+                    },
+                },
+            ],
+            xAxes: [
+                {
+                    ticks: {
+                        autoSkip: false,
+                    },
+                },
+            ],
+        },
+    };
+
+    return (
+        <div>
+            {chartData.map((data, index) => {
+                if (!data) {
+                    return null;
+                }
+                return (
+                    <div key={index} style={chartStyle}>
+                        <Line data={data} options={options} height={height} width={width} />
+                    </div>
+                );
+            })}
+        </div>
+    );
+}
+);

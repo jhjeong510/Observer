@@ -1,0 +1,17 @@
+@font-face {
+  font-family: 'KorailRoundGothicBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KorailRoundGothicBold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+.weatherTime {
+  display: flex;
+  position: relative;
+  right: -24.5%;
+  font-size: 1.5rem;
+
+  text-shadow: 1px 1px #ffffff;
+  color: #000000;
+  -webkit-text-stroke: 1px #7c7c7c;
+}

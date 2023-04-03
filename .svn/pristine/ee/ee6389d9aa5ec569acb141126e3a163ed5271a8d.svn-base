@@ -1,0 +1,87 @@
+@font-face {
+    font-family: 'KorailRoundGothicBold';
+    src: local('KorailRoundGothicBold'), url('../font/Korail_Round_Gothic_Bold.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+  }
+
+.root {
+    margin: 3px 0px -15px 0px;
+}
+
+.form {
+    margin: 1.25rem 2.5rem 1rem 2rem;
+}
+
+.condition_parent {
+    display: flex;
+    margin-left: -2rem;
+    margin-top: -0.625rem;
+    background-color: #00000099;
+    width: 87.484vw;
+}
+
+.condition {
+    display: flex;
+    justify-content: unset;
+    align-items: center;
+    height: 10.836vh;
+    padding: 1rem;
+}
+
+.select {
+    display: flex;
+    align-items: center;
+}
+
+.inquiry_btn {
+    cursor: pointer;
+    margin-right: 1rem;
+    background: linear-gradient(133deg, #424242 -10%, #c2c2c2 30%, #C2C2C3 60%, #424242);
+    border: 1.5px solid #bbbaba;
+    box-shadow: 1px 1px 5px 1px black;
+    font-weight: bolder;
+    text-shadow: 1px 1px white;
+    color: #0e0e0e;
+    border-radius: 2.5px;
+    height: 37px;
+    width: 50px;
+    font-size: inherit;
+    margin-top: 6px;
+}
+
+.inquiry_btn:hover {
+    box-shadow: 0px 0px 2px 2.2px #a9c3d3;
+    font-weight: bolder;
+    border: 1.5px solid #474646;
+}
+
+.inquiry_btn:active {
+    outline: 0;
+    outline-offset: 0;
+    background: linear-gradient(133deg, #000000 -10%, #494848 30%, #787878 60%, #101010);
+    text-shadow: 1px 1px #252525;
+    border: 1.5px solid #0b0b0b;
+    box-shadow: 0px 0px 2px 2.2px #4f4f4f;
+    color: #b1b1b1;
+    font-weight: bolder;
+}
+
+.type_label {
+    width: 4vw;
+    margin: auto;
+    text-align: center;
+}
+
+.type_select {
+    width: 6.5vw;
+    margin: auto;
+    text-align: center;
+}
+
+.occurTime {
+    font-family: 'KorailRoundGothicBold';
+    margin: auto;
+    width: 3vw;
+    text-align: center;
+}

@@ -1,0 +1,47 @@
+const { io } = require('socket.io-client');
+
+exports.connectVCounterServer = () => {
+  const socket = io('http://'+process.env.WEBSOCKET_URL+':'+(parseInt(process.env.PORT)+2));
+  //const socket = io('http://192.168.10.24:4202');
+  socket.on('connect', (vSocket) => {
+    console.log('vCounterSocket Connected: ', vSocket);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('vCounterSocket Disconnected');
+  });
+  global.vCounterwebsocket = socket;
+}
+
+// const eventTriggerPacket = newPacketData[14];
+// const eventTriggerData = eventTriggerPacket.toString(2).padStart(8, '0');
+// try {
+// let normalIncout = eventTriggerData[0];
+// let reverseInCount = eventTriggerData[1];
+// let normalOutCount = eventTriggerData[2];
+// let reverseOutCount = eventTriggerData[3];
+
+
+// let query = `UPDATE ob_vcounter_count SET `;
+// let setQuery = '';
+// let condition = `WHERE ipaddress = '${ipaddress}'`;
+
+// if (normalIncout === 1) {
+//    setQuery += `in_count = in_count + 1`;
+// }
+
+// if (normalOutCount === 1) {
+//    setQuery += `out_count = out_count - 1`;
+// }
+// if (reverseOutCount === 1) {
+//    setQuery += `out_count = out_count + 1`;
+// }
+
+// if (reverseInCount === 1) {
+//    setQuery += `in_count = in_count - 1`;
+// }
+
+// if (setQuery) {
+//    query += setQuery + condition;
+// }
+// const result = await dbManager.pgQuery(query);

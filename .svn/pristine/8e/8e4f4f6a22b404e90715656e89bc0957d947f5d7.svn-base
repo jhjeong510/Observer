@@ -1,0 +1,67 @@
+.eventDetail {
+  position: absolute;
+  top: 32.8%;
+  left: 40%;
+  width: 20%;
+  z-index: 10000;
+  /* border: #f0ec23 2px solid;
+  border-right: #f0ec2c 3px solid; */
+  backdrop-filter: blur(10px);
+  border: 1.5px solid #8e8e8e;
+  /* box-shadow: 4px 4px 14px 2px black; */
+  box-shadow: 7px 6px 17px 4px black;
+  border-radius: 8px;
+}
+
+.eventDetailTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem 0.75rem;
+  width: 100%;
+  height: 2.5rem;
+  font-size: 1rem;
+  background-color: #272F42;
+  margin-bottom: 0;
+  border-radius: 7px 7px 0 0;
+  font-family: 'KorailRoundGothicBold';
+  background-color: #000000d8;
+}
+
+.eventDetailVideoClose {
+  cursor: pointer;
+  transition: transform ease-in 300ms;
+}
+
+.eventDetailVideoClose:hover {
+  opacity: 0.5;
+  transform: scale(1.2);
+}
+
+.eventDetailVideoImg {
+  min-height: 23.117vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingScreen {
+  display: flex;
+  justify-content: center;
+  max-height: 23.117vh;
+}
+
+.videoScreen {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-height: 23.117vh;
+}
+
+.eventlist_modal {
+  background-color: #00d25b;
+}
+
+.text-muted mb-0_2{
+  color: white;
+}

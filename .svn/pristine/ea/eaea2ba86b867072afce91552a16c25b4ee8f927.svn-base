@@ -1,0 +1,166 @@
+import React, { useState, useEffect, useRef } from 'react';
+import styles from './CrowdDensityService.module.css'
+import { Modal, Button, Form, Tabs, Tab, Nav, Row, Col, Table } from 'react-bootstrap';
+import CrowdDensityThresholdModal from '../shared/modal/CrowdDensityThresholdModal';
+import AddCrowdDensityCameraModal from '../shared/modal/AddCrowdDensityCameraModal';
+import { handleCloseContext } from "./handlers/ContextMenuHandler";
+import CrowdDensityChart from './CrowdDensityChart';
+import { getCrowdDensityCamera, getCrowdDensityData } from './api/apiService';
+import CrowdDensityCameraDetail from './CrowdDensityCameraDetail';
+
+export default function CrowdDensityService({
+	showCrowdDensityServiceModal,
+	handleShowCrowdDensityModal,
+	parkingCameraUpdate,
+	socketClient,
+	crowdDensityCamera,
+	deviceList,
+	cameraList,
+	crowdDensityCountingLog
+}) {
+	const [crowdDensityCameras, setCrowdDensityCameras] = useState([]);
+	const [crowdDensityCameraList, setCrowdDensityCameraList] = useState([]);
+	const [modalWarnMessage, setModalWarnMessage] = useState('');
+	const [currentTabName, setCurrentTabName] = useState('observer parkingService');
+	const [crowdDensityCameraModal, setCrowdDensityCameraModal] = useState({ show: false, title: '', message: '' });
+	const [socketCamera, setSocketCamera] = useState([]);
+	const socketCameraRef = useRef(null);
+	const [selectedCameraId, setSelectedCameraId] = useState(null);
+
+	const handleShowModalCamera = () => {
+		setCrowdDensityCameraModal({ show: true, title: '군중 밀집도 카메라 추가', message: '카메라 선택' });
+		handleCloseContext();
+	}
+
+	const handleCancel = (e) => {
+		handleShowCrowdDensityModal(e);
+	}
+
+	const handleGetCrowdDensityCameraList = async () => {
+		const res = await getCrowdDensityCamera();
+		if (res && res.data && res.data.result) {
+			setCrowdDensityCameraList(res.data.result);
+		}
+	}
+
+	useEffect(() => {
+		const crowdDensityData = async () => {
+			try {
+				const res = await getCrowdDensityData();
+				console.log(res)
+				if (res && res.data && res.data.result.length > 0) {
+					setCrowdDensityCameras(res.data.result);
+				}
+			} catch (err) {
+				console.error('getParkingCameraList err: ', err);
+			}
+		}
+		crowdDensityData();
+		handleGetCrowdDensityCameraList();
+	}, []);
+
+	useEffect(() => {
+		handleGetCrowdDensityCameraList();
+	}, [crowdDensityCamera])
+
+	const handleConnectSocket = async () => {
+		// const socket = socketClient;
+		// parkingCameras && parkingCameras.forEach(async (parkingCamera) => {
+		// 	if (parkingCamera.camera_id && socketCameraRef.current && !socketCameraRef.current.includes(parkingCamera.camera_id)) {
+		// 		const cameraId = parkingCamera.camera_id;
+		// 		await socket && socket.emit('cameraStream', {
+		// 			cameraId,
+		// 			cmd: 'on'
+		// 		});
+		// 	}
+		// })
+	}
+
+	const handleDisconnectSocket = async () => {
+		// const socket = socketClient;
+		// parkingCameras && parkingCameras.forEach(async (parkingCamera) => {
+		// 	if (parkingCamera.camera_id) {
+		// 		const cameraId = parkingCamera.camera_id;
+		// 		await socket && socket.emit('cameraStream', {
+		// 			cameraId,
+		// 			cmd: 'off'
+		// 		});
+		// 	}
+		// })
+		// setSocketCamera([]);
+	}
+
+	useEffect(() => {
+		if (socketClient && showCrowdDensityServiceModal) {
+			handleConnectSocket();
+		} else if (socketClient && !showCrowdDensityServiceModal) {
+			handleDisconnectSocket();
+		}
+		return () => {
+			socketClient && handleDisconnectSocket();
+		}
+	}, [showCrowdDensityServiceModal])
+
+
+	useEffect(() => {
+		socketCameraRef.current = socketCamera;
+	}, [socketCamera])
+
+
+	return (
+		<>
+			<Modal
+				show={showCrowdDensityServiceModal}
+				size='xl'
+				centered
+				contentClassName={styles.modal_content_observer_crowdDensityService}
+				onHide={handleCancel}
+			>
+				<Modal.Header>
+					<Modal.Title>군중밀집도 관리</Modal.Title>
+					<div >
+						<a href="!#" className={styles.setting_modal_closer} onClick={handleCancel}></a>
+					</div>
+				</Modal.Header>
+				<Modal.Body>
+					<Tab.Container id="left-tabs-example" defaultActiveKey={crowdDensityCameraList.length > 0 ? crowdDensityCameraList[0].idx : 0}>
+						<Button className={styles.addCamera} onClick={handleShowModalCamera}> 카메라 추가 </Button>
+						<Row className={styles.content}>
+							<Col sm={1} className={styles.observer_crowd_col_sm_1}>
+								{/* <Nav variant="tabs" className="flex-column nav-tabs-vertical">*/}
+								<Nav variant="tabs" className={styles.navItem_menu}>
+									{crowdDensityCameraList && crowdDensityCameraList.map((crowdDensityCamera) => {
+										if (crowdDensityCamera.name) {
+											return <Nav.Item key={crowdDensityCamera.idx} className={styles.navItem}>
+												<Nav.Link eventKey={crowdDensityCamera.idx}>
+													{crowdDensityCamera.name}
+												</Nav.Link>
+											</Nav.Item>
+										}
+									})}
+								</Nav>
+							</Col>
+							<Col sm={11} className={styles.observer_crowd_col_sm_11}>
+								<Tab.Content className="tab-content-vertical">
+									{crowdDensityCameraList && crowdDensityCameraList.map((crowdDensityCamera) => {
+										return (
+											<Tab.Pane key={crowdDensityCamera.idx} eventKey={crowdDensityCamera.idx}>
+												<CrowdDensityCameraDetail
+													crowdDensityCamera={crowdDensityCamera}
+													selectedCameraId={'0'}
+													crowdDensityCountingLog={crowdDensityCountingLog}
+												/>
+											</Tab.Pane>
+										)
+									})
+									}
+								</Tab.Content>
+							</Col>
+						</Row>
+					</Tab.Container>
+				</Modal.Body>
+			</Modal>
+			{crowdDensityCameraModal.show ? <AddCrowdDensityCameraModal show={crowdDensityCameraModal.show} setShow={setCrowdDensityCameraModal} message={crowdDensityCameraModal.message} title={crowdDensityCameraModal.title} crowdDensityCameraList={crowdDensityCameraList} cameraList={cameraList} /> : null}
+		</>
+	)
+}

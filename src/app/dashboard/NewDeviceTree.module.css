@@ -1,0 +1,24 @@
+.deviceMenu {
+  /* width: 28.125rem; */
+  height: 270px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  resize: vertical;
+  min-height: 41px;
+  max-height: 809px;
+  backdrop-filter: blur(10px);
+
+  border-radius: 20px;
+}
+
+.handleDisplayMenu {
+  position: absolute;
+  top: 0%;
+  left: 93%;
+  cursor: pointer;
+  padding: 0.4rem;
+}
+
+.handleDisplayMenu:hover {
+  background: rgba(54, 71, 58, 0.67);
+}

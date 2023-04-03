@@ -1,0 +1,65 @@
+const dbManager = require('../db/dbManager');
+const { format } = require('date-fns');
+
+const parkingRedZoneCheck = async () => {
+	try {
+		let redZoneCheckTime = '';
+		const querySetting = `SELECT * FROM ob_setting WHERE name='setting detection time for red-zone'`;
+		const result = await dbManager.pgQuery(querySetting);
+		if (result && result.rows && result.rows.length > 0) {
+			redZoneCheckTime = parseInt(result.rows[0].setting_value) * 1000;
+		}
+
+		const query = `SELECT * FROM ob_parking_space`;
+		const res = await dbManager.pgQuery(query);
+		if (res && res.rows && res.rows.length > 0) {
+			const parkingSpace = res.rows;
+			const redZones = parkingSpace.filter((data) => data.occupancy === '1' && data.type === 4);
+			let parkingBox = {};
+			let area = {};
+			redZones.forEach(redZone => {
+				parkingBox[redZone.index_number] = Date.now();
+			});
+			if (redZones && redZones.length > 0) {
+				setInterval(async () => {
+					for (const index_number in parkingBox) {
+						if (parkingBox[index_number]) {
+							const diff = Date.now() - parkingBox[index_number];
+							if (diff >= redZoneCheckTime) {
+								try {
+									// console.log(`이벤트 발생 index_number : ${index_number}, ${parkingBox[index_number]}`);
+									const ipaddress = redZones.find((row) => index_number === row.index_number).camera_ip;
+									const queryCameraInfo = `SELECT * FROM ob_camera WHERE ipaddress='${ipaddress}'`;
+									const parkingCameraInfo = await dbManager.pgQuery(queryCameraInfo);
+									if (parkingCameraInfo && parkingCameraInfo.rows.length > 0) {
+										const areaCheck = `SELECT * FROM ob_parking_space WHERE index_number='${index_number}'`;
+										const resArea = await dbManager.pgQuery(areaCheck);
+										const queryEvent = `SELECT * FROM ob_event WHERE ipaddress='${ipaddress}' AND description='${resArea.rows[0].parking_area} 주차구역 ${index_number}번' AND acknowledge=false`;
+										const resEvent = await dbManager.pgQuery(queryEvent);
+										if (!resEvent.rows || resEvent.rows.length === 0 || resEvent.rows.every(row => row.acknowledge === true)) {
+											const sqlEvent = `INSERT INTO ob_event (name, description, id, building_idx, floor_idx, event_occurrence_time, device_type, ipaddress, service_type, event_type, camera_id) 
+											VALUES ('주차금지구역 이벤트', '${resArea.rows[0].parking_area} 주차구역 ${index_number}번', '${parkingCameraInfo.rows[0].id}', ${parkingCameraInfo.rows[0].building_idx}, ${parkingCameraInfo.rows[0].floor_idx}, '${format(parkingBox[index_number], 'yyyyMMdd')}' || 'T' || '${format(parkingBox[index_number], 'HHmmss')}', 'camera', '${ipaddress}', 'parkingcontrol', ${parseInt(35)}, '${parkingCameraInfo.rows[0].id}');`;
+											const resEvent = await dbManager.pgQuery(sqlEvent);
+											if (global.websocket && resEvent && resEvent.rowCount > 0) {
+												global.websocket.emit("eventList", { eventList: resEvent.rowCount });
+												parkingBox[index_number] = Date.now();
+											}
+										}
+									}
+								} catch (error) {
+									console.log('parkingRedZone event error:', error);
+								}
+							}
+						}
+					}
+				}, 5000);
+			}
+		}
+	} catch (err) {
+		console.log('check parking redZone funciton err: ', err);
+	}
+}
+
+module.exports = {
+	parkingRedZoneCheck
+}

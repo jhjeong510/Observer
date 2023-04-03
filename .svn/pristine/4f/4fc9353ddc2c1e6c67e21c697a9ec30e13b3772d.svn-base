@@ -1,0 +1,79 @@
+.closeDiv {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.vCounterSettingmodal {
+  width: 20vw;
+  height: 21vh;
+  position: absolute;
+  top: 30%;
+  left: 33%;
+  background: #0000008b;
+  z-index: 1;
+  border: 2px solid #2c2e33;
+}
+
+.vCounterSettingmodal_closer {
+  text-decoration: none;
+  position: relative;
+  height: 3vh;
+  width: 1.5vw;
+  color: rgb(255, 255, 255);
+  padding: 0.3rem;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.vCounterSettingmodal:after {
+  content: "✖";
+  font-size: 1rem;
+  color: #fff;
+  position: absolute;
+  cursor: pointer;
+  top: 1.7%;
+  left: 94.5%;
+}
+
+.form {
+  width: 90%;
+  margin: auto;
+  height: 17vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.input_box {
+  display: flex;
+  align-items: center;
+}
+
+.label {
+  width: 33%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.submit_btn {
+  cursor: pointer;
+  background: linear-gradient(133deg, #424242 -10%, #c2c2c2 30%, #C2C2C3 60%, #424242);
+  border: 1.5px solid #bbbaba;
+  box-shadow: 1px 1px 5px 1px black;
+  font-weight: bolder;
+  text-shadow: 1px 1px white;
+  color: #0e0e0e;
+  border-radius: 2.5px;
+  width: 100%;
+  margin-right: 20px;
+}
+
+.input_warn {
+  position: absolute;
+  color: #ff0000;
+  top: 5%;
+  font-size: 0.8rem;
+}

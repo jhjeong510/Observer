@@ -1,0 +1,22 @@
+.status {
+  position: relative;
+  left: 50%
+}
+
+.location {
+  display: flex;
+  position: relative;
+  bottom: 1rem;
+  width: 40%;
+  justify-content: space-around;
+  border: 2px solid;
+}
+
+.edit {
+  cursor: pointer;
+}
+
+.edit:hover {
+  color: cornflowerblue;
+  transform: scale(1.1);
+}

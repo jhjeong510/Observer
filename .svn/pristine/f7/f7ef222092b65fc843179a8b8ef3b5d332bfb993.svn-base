@@ -1,0 +1,29 @@
+import React from 'react';
+import styles from './VCounterInfo.module.css';
+
+const setVCounterStatus = (vCounterInfo) => {
+  if (vCounterInfo.length > 1) {
+    return <div className={styles.location}>
+      <span>주차 가능 공간 : {vCounterInfo.map(vCounter => vCounter.empty_slots).reduce((prev, curr) => (prev + curr), 0)}</span>
+      <span>입차 : {vCounterInfo.map(vCounter => vCounter.in_count).reduce((prev, curr) => (prev + curr), 0)}</span>
+      <span>출차 : {vCounterInfo.map(vCounter => vCounter.out_count).reduce((prev, curr) => (prev + curr), 0)}</span>
+      <span>차량 대수 : {vCounterInfo.map(vCounter => vCounter.vehicle_count).reduce((prev, curr) => (prev + curr), 0)}</span>
+    </div>
+  } else if (vCounterInfo.length === 1) {
+    return <div className={styles.location}>
+      <span>주차 가능 공간 : {vCounterInfo[0].empty_slots}</span>
+      <span>입차 : {vCounterInfo[0].in_count}</span>
+      <span>출차 : {vCounterInfo[0].out_count}</span>
+      <span>차량 대수 : {vCounterInfo[0].vehicle_count}</span>
+    </div>
+  }
+}
+
+export default function VCounterInfo({ vCounters }) {
+
+  if (vCounters) {
+    return <span className={styles.status}>{setVCounterStatus(vCounters)}</span>
+  } else {
+    return ''
+  }
+}

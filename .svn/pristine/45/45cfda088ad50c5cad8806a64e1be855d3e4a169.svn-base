@@ -1,0 +1,454 @@
+import {API, AuthAPI} from "./axiosProvider";
+
+// axios instance data 필드
+// axios.post(url[, data[, config]])
+// axios.put(url[, data[, config]])
+// axios.patch(url[, data[, config]])
+
+// post, put, patch => AuthAPI
+
+/////////////////////////////// get ///////////////////////////////
+export const readEvents = async (sort) => {
+	const route = 'events';
+	if(!sort){
+		sort = '최신';
+	}
+	try {
+		const res = await API.get(route, {
+			params: {
+				sort
+			}
+		});
+		if (res.data && res.data.result && res.data.result.length > 0) {
+			return {
+				eventList: res.data.result
+			}
+		}
+		console.log('App get events res:', res);
+	} catch (err) {
+		console.log('App get event err:', err);
+	}
+}
+
+export const accessEventRec = async (props) => {
+	const route = 'accessEventRec';
+	try {
+		const res = await AuthAPI.get(route, props);
+		return res
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+export const getEventDbInfo = async (eventDetail) => {
+	const router = 'selectEvent';
+	try {
+		const res = await AuthAPI.get(router, {
+			params: {
+				idx: eventDetail.eventIdx,
+				serviceType: eventDetail.serviceType
+			}
+		})
+		if (res.data && res.data.result && res.data.result.length > 0) {
+			return res.data.result[0];
+		}
+	} catch (err) {
+		console.log(err)
+	}
+}
+
+export const handleGetSettings = async (queryValue) => {
+	const router = 'setting';
+	try {
+		const res = await AuthAPI.get(router, {
+			params: queryValue
+		})
+		if(res && res.data && res.data.result && res.data.result.length > 0) {
+			return res.data.result;
+		}
+	} catch(err) {
+		console.log('Read Observer Settings ERR: ', err);
+	}
+}
+
+/////////////////////////////// post ///////////////////////////////
+export const addBuilding = async (props) => {
+	const route = 'addBuilding';
+	try {
+		const res = await AuthAPI.post(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+export const addFloor = async (props) => {
+	const route = 'addFloor';
+	try {
+		const res = await AuthAPI.post(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+export const handleLockDoor = async (props) => {
+	const route = 'doorcontrol';
+	try {
+		const res = await AuthAPI.post(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+export const addGuardianlite = async (props) => {
+	const route = 'guardianlite';
+	try {
+		const res = await AuthAPI.post(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+
+export const addGdp2000 = async (props) => {
+	const route = 'pids';
+	try {
+		const res = await AuthAPI.post(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+export const unlock10sDoor = async (props) => {
+	const route = 'doorcontrol';
+	try {
+		const res = await AuthAPI.post(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+export const unlockDoor = async (props) => {
+	const route = 'doorcontrol';
+	try {
+		const res = await AuthAPI.post(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+export const lockDoor = async (props) => {
+	const route = 'doorcontrol';
+	try {
+		const res = await AuthAPI.post(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+/////////////////////////////// delete ///////////////////////////////
+export const removeBuilding = async (props) => {
+	const route = 'building'; 
+	return await AuthAPI.post(route, props);
+}
+
+export const removeFloor = async (props) => {
+	const route = 'floor'; 
+	return await AuthAPI.post(route, props);
+}
+
+export const removeGuardianlite = async (props) => {
+	const route = 'guardianlite';
+	try {
+		const res = await AuthAPI.delete(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+export const removeFence = async (props) => {
+	const route = 'pids';
+	try {
+		const res = await AuthAPI.put(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+
+////////////////////////////// put ///////////////////////////////////
+export const modifyBuilding = async (props) => {
+	const route = 'building'; 
+	return await AuthAPI.put(route, props);
+}
+
+export const addCamera = async (props) => {
+	const route = 'addLocation'; // type === 'camera'
+	try {
+		const res = await AuthAPI.put(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+export const addEbell = async (props) => {
+	const route = 'addLocation'; 
+	try {
+		const res = await AuthAPI.put(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+export const addDoor = async (props) => {
+	const route = 'addLocation';
+	try {
+		const res = await AuthAPI.put(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+export const addVitalsensor = async (props) => {
+	const route = 'addLocation';
+	try {
+		const res = await AuthAPI.put(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+export const setAcknowledge = async (props) => {
+	const route = 'acknowledge';
+	try {
+		const res = await AuthAPI.put(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+export const setAcknowledgeDetailEvent = async (idx, service_type, userId) => {
+	const router = 'acknowledge';
+	try {
+		const res = await AuthAPI.put(router, {
+			idx,
+			service_type,
+			acknowledge_user: userId
+		});
+	} catch (err) {
+		console.log('leftbar get device err:', err);
+	}
+}
+
+export const removeEbell = async (props) => {
+	const router = 'ebell';
+	try {
+		const res = await AuthAPI.put(router, props);
+	} catch (err) {
+		console.log('leftbar get device err:', err);
+	}
+}
+
+export const removeCamera = async (props) => {
+	const router = 'camera';
+	try {
+		const res = await AuthAPI.put(router, props);
+	} catch (err) {
+		console.log('leftbar get device err:', err);
+	}
+}
+
+export const removeDoor = async (props) => {
+	const router = 'door';
+	try {
+		const res = await AuthAPI.put(router, props);
+	} catch (err) {
+		console.log('leftbar get device err:', err);
+	}
+}
+
+export const removeVitalsensor = async (props) => {
+	const router = 'breathSensor';
+	try {
+		const res = await AuthAPI.put(router, props);
+	} catch (err) {
+		console.log('leftbar get device err:', err);
+	}
+}
+
+export const handleUpdateSettings = async (idx, name, setting_value) => {
+	const router = 'setting';
+	try {
+		const result = await AuthAPI.put(router, {
+			idx,
+			name,
+			setting_value
+		})
+		if(!name && result && result.data && result.data.result > 0) {
+			const settings = await handleGetSettings();
+			return settings;
+		}
+	} catch (err) {
+		console.log('Handle Observer Setting Value Func Err: ', err);
+	}
+}
+
+export const addFence = async (props) => {
+	const route = 'pidsZone';
+	try {
+		const res = await AuthAPI.put(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+export const setScheduleGroup = async (props) => {
+	const route = 'setEachScheduleGroup';
+	try {
+		const res = await AuthAPI.put(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+export const ebellInterlockCamera = async (props) => {
+	const route = 'cameraForEbell';
+	try {
+		const res = await AuthAPI.put(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+export const doorInterlockCamera = async (props) => {
+	const route = 'cameraForDoor';
+	try {
+		const res = await AuthAPI.put(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+export const vitalsensorInterlockCamera= async (props) => {
+	const route = 'cameraForBreathSensor';
+	const cameraId = props.cameraId;
+	try {
+		const res = await AuthAPI.put(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+export const pidsInterlockCamera = async (props) => {
+	const route = 'cameraForPids';
+	try {
+		const res = await AuthAPI.put(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}
+
+export const readBuildingList = async () => {
+	const router = 'building';
+	try {
+		const resBuilding = await AuthAPI.get(router);
+		if (resBuilding && resBuilding.data && resBuilding.data.result) {
+			return resBuilding.data.result;
+		} else {
+			console.log('readBuildingList - No Error but No Result:', resBuilding);
+		}
+	} catch(err) {
+		console.log('readBuildingList API Error', err);
+	}
+}
+
+export const readFloorList = async () => {
+	const router = 'floor';
+	try {
+		const resFloor = await AuthAPI.get(router);
+		if (resFloor && resFloor.data && resFloor.data.result) {
+			const sortFloor = [...resFloor.data.result].sort((a, b) => a.name > b.name ? 1 : -1);
+			return sortFloor;
+		} else {
+			console.log('readFloorList - No Error but No Result:', resFloor);
+		}
+	} catch(err) {
+		console.log('readFloorList Error', err);
+	}
+}
+
+export const readMapImage = async () => {
+	const router = 'mapimage';
+	try {
+		const res = await AuthAPI.get(router);
+		if(res && res.data && res.data.result) {
+			return res.data.result;
+		}
+	} catch (err) {
+			console.log(err)
+	}
+}
+
+export const readCameraList = async () => {
+	const router = 'camera';
+	try {
+		const resCamera = await AuthAPI.get(router);
+		if (resCamera && resCamera.data && resCamera.data.result) {
+			return resCamera.data.result;
+		} else {
+			console.log('readCameraList - No Error but No Result:', resCamera);
+		}
+	} catch(err) {
+		console.log('readCameraList Error', err);
+	}
+}
+
+export const readDeviceList = async () => {
+	const router = 'device';
+	try {
+		const resDevice = await AuthAPI.get(router);
+		if (resDevice && resDevice.data && resDevice.data.result) {
+			const sortDevice = [...resDevice.data.result].sort((a, b) => a.id > b.id ? 1 : -1);
+			return resDevice.data.result;
+		} else {
+			console.log('readDeviceList - No Error but No Result:', resDevice);
+		}
+	} catch(err) {
+		console.log('readDeviceList Error', err);
+	}
+}
+
+export const readPidsList = async () => {
+	const router = 'pids';
+	try {
+		const resPids = await AuthAPI.get(router);
+		if (resPids && resPids.data && resPids.data.result) {
+			return resPids.data.result;
+		} else {
+			console.log('readPidsList - No Error but No Result:', resPids);
+		}
+	} catch(err) {
+		console.log('readPidsList Error', err);
+	}
+}
+
+export const controlVitalsensor = async (props) => {
+	const route = 'breathSensorStatus';
+	try {
+		const res = await AuthAPI.put(route, props);
+		// if (res.status === 200) {
+		// 	this.props.handleShowToast('success', `${location} ${id} ${status === 'false' ? 'OFF' : 'ON'}`)
+		// 	return;
+		// } else {
+		// 	this.props.handleShowToast('alert', `${location} ${id} ${status === 'false' ? 'OFF 실패' : 'ON 실패'}`)
+		// }
+	} catch(err) {
+		console.log(err)
+		// this.props.handleShowToast('error', `${location} ${id} ${status === 'false' ? 'OFF 실패' : 'ON 실패'}`)
+	}
+}
+
+export const removePids = async (props) => {
+	const route = 'pidsGdp200';
+	try {
+		const res = await AuthAPI.put(route, props);
+	} catch(err) {
+		console.log(err)
+	}
+}

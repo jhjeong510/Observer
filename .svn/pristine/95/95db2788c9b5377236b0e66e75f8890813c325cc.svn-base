@@ -1,0 +1,62 @@
+.menuMapAddIcon,
+.menuMapBuildingContext,
+.menuMapCameraContext,
+.menuMapEbellContext,
+.menuMapDoorContext,
+.menuMapPidsContext,
+.menuMapVitalsensorContext,
+.menuMapGuardianliteContext {
+  display: none;
+  position: absolute;
+  padding: 8px;
+  width: 190px;
+  background-color: #fff;
+  color: #222;
+  font-size: 13px;
+  box-shadow: rgba(0, 0, 0, 0.2) 3px 3px 5px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  z-index: 100;
+  list-style: none;
+}
+
+.menuMapAddIcon button,
+.menuMapBuildingContext button,
+.menuMapCameraContext button,
+.menuMapPidsContext button,
+.menuMapEbellContext button,
+.menuMapDoorContext button,
+.menuMapVitalsensorContext button,
+.menuMapGuardianliteContext button {
+  width: 100%;
+  background-color: white;
+  border: none;
+  margin: 0;
+  padding: 5px;
+  vertical-align: baseline;
+}
+
+.menuMapAddIcon button:hover,
+.menuMapBuildingContext button:hover,
+.menuMapPidsContext button:hover {
+  cursor: pointer;
+  background-color: rgb(254, 0, 0);
+  color: #eee;
+}
+
+.menuMapAddIcon button:hover,
+.menuMapCameraContext button:hover,
+.menuMapDoorContext button:hover,
+.menuMapVitalsensorContext button:hover,
+.menuMapGuardianliteContext button:hover,
+.menuMapEbellContext button:hover {
+  cursor: pointer;
+  background-color: #333;
+  color: #eee;
+}
+
+.separator {
+	height: 1px;
+	background: #dedede;
+	margin: 2px 0px 2px 0px;
+}

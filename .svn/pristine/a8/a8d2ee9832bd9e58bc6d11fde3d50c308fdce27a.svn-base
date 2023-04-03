@@ -1,0 +1,35 @@
+.rightDetailEvent {
+  position: absolute;
+  top: 2px;
+  width: 100%;
+  z-index: 10000;
+  border: #f0ec23 2px solid;
+  border-right: #f0ec2c 3px solid;
+  backdrop-filter: blur(10px);
+}
+
+.detailEventTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem 0.75rem;
+  width: 100%;
+  height: 2.5rem;
+  font-size: 1rem;
+  background-color: #272F42;
+  margin-bottom: 0;
+}
+
+.detailEventVideoClose {
+  cursor: pointer;
+  transition: transform ease-in 300ms;
+}
+
+.detailEventVideoClose:hover {
+  opacity: 0.5;
+  transform: scale(1.2);
+}
+
+.detailEventVideoImg {
+  background-color: black;
+}

@@ -1,0 +1,7 @@
+div:has(.slider-control-bottomcenter) {
+	inset: 0 0 -35px !important;
+ }
+ .slider-control-bottomcenter svg {
+	fill: blue;
+ }
+ 

@@ -1,0 +1,84 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	text-align: center;
+}
+
+.wrap {
+	max-width: 75rem;
+	margin: 0;
+}
+
+h3 {
+	padding: 20px 0;
+	font-size: 30px;
+	color: #fff;
+}
+
+
+.camArea {
+	/* padding: 60px; */
+	margin: 10px;
+	/* font-size: 20px; */
+	/* text-align: center; */
+}
+
+.camArea1 {
+	width: 560px;
+	height: 315px;
+	margin-top: 3.5rem;
+	max-height: 315px;
+}
+
+.camArea2 {
+	width: 560px;
+	height: 315px;
+	margin-top: 3.5rem;
+	max-height: 315px;
+}
+
+@media(min-width: 700px) {
+	.wrap {
+		display: flex;
+		height: 28rem;
+	}
+
+	.camArea_ {
+		flex: 1;
+	}
+}
+
+.loading {
+	position: relative;
+	top: 10vh;
+	left: 12vw;
+}
+
+.video {
+	width: 38.5vw;
+	height: 42.9102163;
+}
+
+.video_large {
+	display: flex;
+	width: 55vw;
+	height: 61.300309vh;
+	margin: auto;
+}
+
+.parentDiv {
+	position: relative;
+	width: 100%;
+}
+
+.childDiv {
+	position: relative;
+	display: flex;
+	width: 55vw;
+	height: 61.300309vh;
+	margin: auto;
+	top: -61.300309vh;
+}

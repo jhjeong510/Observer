@@ -1,0 +1,68 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	text-align: center;
+}
+
+.wrap {
+	max-width: 75rem;
+	margin: 0;
+}
+
+h3 {
+	padding: 20px 0;
+	font-size: 30px;
+	color: #fff;
+	background: #555;
+}
+
+
+
+.camArea {
+	/* padding: 60px; */
+	margin: 10px;
+	/* font-size: 20px; */
+	/* text-align: center; */
+}
+
+.camArea1 {
+	background: #ff3131;
+	width: 560px;
+	height: 315px;
+	margin-top: 3.5rem;
+	max-height: 315px;
+}
+
+.camArea2 {
+	background: #3894ff;
+	width: 560px;
+	height: 315px;
+	margin-top: 3.5rem;
+	max-height: 315px;
+}
+
+@media(min-width: 700px) {
+	.wrap {
+		display: flex;
+		height: 28rem;
+		background-color: yellowgreen;
+	}
+
+	.camArea_ {
+		flex: 1;
+	}
+}
+
+.loading {
+	position: relative;
+	top: 10vh;
+	left: 12vw;
+}
+
+.video {
+	width: 29.166667vw;
+	height: 32.50774vh;
+}

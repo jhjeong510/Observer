@@ -1,0 +1,192 @@
+import React, { useState, useEffect, useRef } from 'react';
+import styles from './CrowdDensityService.module.css'
+import { Modal, Button, Form, Tabs, Tab, Nav, Row, Col, Table } from 'react-bootstrap';
+import CrowdDensityThresholdModal from '../shared/modal/CrowdDensityThresholdModal';
+import AddCrowdDensityCameraModal from '../shared/modal/AddCrowdDensityCameraModal';
+import { handleCloseContext } from "./handlers/ContextMenuHandler";
+import CrowdDensityChart from './CrowdDensityChart';
+import { getCrowdDensityData } from './api/apiService';
+
+export default function CrowdDensityService({
+	showCrowdDensityServiceModal,
+	handleShowCrowdDensityModal,
+	parkingCameraUpdate,
+	socketClient,
+	eventListUpdate,
+	deviceList,
+}) {
+	const [crowdDensityCameras, setCrowdDensityCameras] = useState([]);
+	const [modalWarnMessage, setModalWarnMessage] = useState('');
+	const [currentTabName, setCurrentTabName] = useState('observer parkingService');
+	const [crowdDensityCameraModal, setCrowdDensityCameraModal] = useState({ show: false, title: '', message: '' });
+	const [crowdDensityThresholdModal, setCrowdDensityThresholdModal] = useState({ show: false, title: '', message: '' });
+	const [socketCamera, setSocketCamera] = useState([]);
+	const socketCameraRef = useRef(null);
+	const [selectedCameraId, setSelectedCameraId] = useState(null);
+
+	const handleCameraSelect = (cameraId) => {
+		setSelectedCameraId(cameraId);
+	};
+
+	const handleShowModalCamera = () => {
+		setCrowdDensityCameraModal({ show: true, title: '군중 밀집도 카메라 추가', message: '카메라 선택' });
+		handleCloseContext();
+	}
+
+	const handleShowModalVCounter = () => {
+		setCrowdDensityThresholdModal({ show: true, title: '임계치 설정' });
+		handleCloseContext();
+	}
+
+	const handleCancel = (e) => {
+		handleShowCrowdDensityModal(e);
+	}
+
+	const handleCurrentTabName = (value) => {
+		setCurrentTabName(value)
+	}
+
+	useEffect(() => {
+		const crowdDensityData = async () => {
+			try {
+				const res = await getCrowdDensityData();
+				console.log(res)
+				if (res && res.data && res.data.result.length > 0) {
+					setCrowdDensityCameras(res.data.result);
+				}
+			} catch (err) {
+				console.error('getParkingCameraList err: ', err);
+			}
+		}
+		crowdDensityData();
+	}, []);
+
+	const handleConnectSocket = async () => {
+		// const socket = socketClient;
+		// parkingCameras && parkingCameras.forEach(async (parkingCamera) => {
+		// 	if (parkingCamera.camera_id && socketCameraRef.current && !socketCameraRef.current.includes(parkingCamera.camera_id)) {
+		// 		const cameraId = parkingCamera.camera_id;
+		// 		await socket && socket.emit('cameraStream', {
+		// 			cameraId,
+		// 			cmd: 'on'
+		// 		});
+		// 	}
+		// })
+	}
+
+	const handleDisconnectSocket = async () => {
+		// const socket = socketClient;
+		// parkingCameras && parkingCameras.forEach(async (parkingCamera) => {
+		// 	if (parkingCamera.camera_id) {
+		// 		const cameraId = parkingCamera.camera_id;
+		// 		await socket && socket.emit('cameraStream', {
+		// 			cameraId,
+		// 			cmd: 'off'
+		// 		});
+		// 	}
+		// })
+		// setSocketCamera([]);
+	}
+
+	useEffect(() => {
+		if (socketClient && showCrowdDensityServiceModal) {
+			handleConnectSocket();
+		} else if (socketClient && !showCrowdDensityServiceModal) {
+			handleDisconnectSocket();
+		}
+		return () => {
+			socketClient && handleDisconnectSocket();
+		}
+	}, [showCrowdDensityServiceModal])
+
+
+	useEffect(() => {
+		socketCameraRef.current = socketCamera;
+	}, [socketCamera])
+
+
+	return (
+		<>
+			<Modal
+				show={showCrowdDensityServiceModal}
+				size='xl'
+				centered
+				contentClassName={styles.modal_content_observer_crowdDensityService}
+				onHide={handleCancel}
+			>
+				<Modal.Header>
+					<Modal.Title>군중밀집도 관리</Modal.Title>
+					<div >
+						<a href="!#" className={styles.setting_modal_closer} onClick={handleCancel}></a>
+					</div>
+				</Modal.Header>
+				<Modal.Body>
+					<div>
+						<Tab.Container id="left-tabs-example" defaultActiveKey="all">
+							<div className='col-12'>
+								<Button style={{ position: 'relative', left: '50.2%', marginBottom: '1.8rem', }} onClick={handleShowModalCamera}> 카메라 추가 </Button>
+								<Button style={{ position: 'relative', left: '30.2%', marginBottom: '1.8rem', }} onClick={handleShowModalVCounter}> 임계치 설정 </Button>
+								<Row className='parking-tab'>
+									<Col sm={1} className={styles.observer_parking_col_sm_1}>
+										<Nav variant="tabs" className="flex-column nav-tabs-vertical">
+											<Nav.Item>
+												<Nav.Link eventKey="all">
+													전체
+												</Nav.Link>
+											</Nav.Item>
+											{crowdDensityCameras && crowdDensityCameras.map((camera) => {
+												if (camera.name) {
+													return <Nav.Item key={camera.idx}>
+														<Nav.Link eventKey={camera.idx + '_camera'}>
+															{camera.name}
+														</Nav.Link>
+													</Nav.Item>
+												}
+											})}
+										</Nav>
+									</Col>
+									<Col sm={11} className={styles.observer_parking_col_sm_11}>
+										<Tab.Content className="tab-content-vertical">
+											<Tab.Pane eventKey="all">
+												<h4 className={styles.parkingCamera_title}>전체</h4>
+
+
+												<div className={styles.parkingCamera_wrapper}>
+
+												</div>
+											</Tab.Pane>
+
+											{crowdDensityCameras && crowdDensityCameras.map((parkingCamera) => {
+												return (
+													<Tab.Pane key={parkingCamera.idx} eventKey={`${parkingCamera.idx}_camera`}>
+														<h4 className={styles.parkingCamera_title}>{parkingCamera.name}</h4>
+
+													</Tab.Pane>
+												)
+											})
+											}
+										</Tab.Content>
+									</Col>
+
+								</Row>
+							</div>
+							<div>
+								<Row>
+									<div className='col-12'>
+										<div className={styles.crowdDensity_chart_area}>
+											<CrowdDensityChart
+												selectedCameraId={'0'}
+											/>
+										</div>
+									</div>
+								</Row>
+							</div>
+						</Tab.Container>
+					</div>
+				</Modal.Body>
+			</Modal>
+			{crowdDensityCameraModal.show ? <AddCrowdDensityCameraModal show={crowdDensityCameraModal.show} setShow={setCrowdDensityCameraModal} message={crowdDensityCameraModal.message} title={crowdDensityCameraModal.title} cameraList={crowdDensityCameras} /> : null}
+			{crowdDensityThresholdModal.show ? <CrowdDensityThresholdModal show={crowdDensityThresholdModal.show} setShow={setCrowdDensityThresholdModal} message={crowdDensityThresholdModal.message} title={crowdDensityThresholdModal.title} deviceList={deviceList} /> : null}
+		</>
+	)
+}

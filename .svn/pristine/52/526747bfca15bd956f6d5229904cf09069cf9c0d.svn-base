@@ -1,0 +1,16 @@
+.add_btn {
+  margin-right: 1rem;
+  background: linear-gradient(133deg, #424242 -10%, #c2c2c2 30%, #C2C2C3 60%, #424242);
+  border: 1.5px solid #bbbaba;
+  box-shadow: 1px 1px 5px 1px black;
+  font-weight: 700;
+  text-shadow: 1px 1px white;
+  color: #0e0e0e;
+  font-size: 0.9375rem;
+  border-radius: 4px;
+  padding: 0 0.8rem;
+}
+
+.add_btn:hover {
+  color: white;
+}

@@ -1,0 +1,64 @@
+import React, { useState, useEffect } from 'react';
+import { Line } from 'react-chartjs-2';
+import { getCrowdDensityCountingLog } from './api/apiService';
+
+export default function CrowdDensityChart({ selectedCameraId }) {
+	const [chartData, setChartData] = useState({});
+
+	useEffect(() => {
+		if (!selectedCameraId) {
+			return;
+		}
+		const getCountingLog = async () => {
+			try {
+				const res = await getCrowdDensityCountingLog('0');
+				console.log(res);
+				if (res && res.data && res.data.result.length > 0) {
+					const data = {
+						labels: res.data.result.map((item) => item.datetime),
+						datasets: [
+							{
+								label: 'Crowd Density Counting',
+								data: res.data.result.map((item) => item.count_average),
+								borderColor: 'rgba(75, 192, 192, 1)',
+								backgroundColor: 'rgba(75, 192, 192, 0.2)',
+								fill: false,
+							},
+						],
+					};
+					setChartData(data);
+				}
+			} catch (err) {
+				console.error('getParkingCameraList err: ', err);
+			}
+		};
+
+		getCountingLog();
+		const interval = setInterval(() => {
+			getCountingLog();
+		}, 30 * 1000);
+
+		return () => clearInterval(interval);
+	}, [selectedCameraId]);
+
+	const options = {
+		scales: {
+			xAxes: [
+				{
+					type: 'time',
+					time: {
+						unit: 'minute',
+					},
+				},
+			],
+		},
+	};
+
+	return (
+		<>
+			<div>
+				<Line data={chartData} options={options} />
+			</div>
+		</>
+	);
+}

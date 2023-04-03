@@ -1,0 +1,265 @@
+import React, { useState, useEffect, useRef } from 'react';
+import styles from './ParkingService.module.css'
+import { Modal, Button, Form, Tabs, Tab, Nav, Row, Col, Table } from 'react-bootstrap';
+import ParkingInfo from './ParkingInfo';
+import AddParkingCameraModal from '../shared/modal/AddParkingCameraModal';
+import { handleCloseContext } from "./handlers/ContextMenuHandler";
+import ParkingCameraStream from './ParkingCameraStream';
+import { getParkingCamera, getParkingCoords } from './api/apiService';
+import ParkingArea from './ParkingArea';
+import ParkingCamera from './ParkingCamera';
+import ParkingSpaceSetting from './ParkingSpaceSetting';
+import ParkingEventList from './ParkingEventList';
+
+export default function ParkingService({
+	showParkingServiceModal,
+	handleShowParkingServiceModal,
+	parkingCameraUpdate,
+	parkingCoordsUpdate,
+	socketClient,
+	eventListUpdate,
+	show,
+	setShow,
+	title,
+	message }) {
+	const [parkingCameras, setParkingCameras] = useState([]);
+	const [modalWarnMessage, setModalWarnMessage] = useState('');
+	const [currentTabName, setCurrentTabName] = useState('observer parkingService');
+	const [cameraModal, setCameraModal] = useState({ show: false, title: '', message: '', callback: false });
+	const [socketCamera, setSocketCamera] = useState([]);
+	const socketCameraRef = useRef(null);
+
+	const handleShowModalCamera = () => {
+		setCameraModal({ show: true, title: '주차 카메라 추가', message: '카메라 선택', callback: false });
+		handleCloseContext();
+	}
+
+	const handleCancel = (e) => {
+		handleShowParkingServiceModal(e);
+	}
+
+	const handleCurrentTabName = (value) => {
+		setCurrentTabName(value)
+	}
+
+	const getParkingCameraList = async () => {
+		try {
+			const res = await getParkingCamera();
+			if (res && res.data && res.data.result.length > 0) {
+				await setParkingCameras(res.data.result);
+			}
+		} catch (err) {
+			console.error('getParkingCameraList err: ', err);
+		}
+	}
+
+	const handleConnectSocket = async () => {
+		const socket = socketClient;
+		parkingCameras && parkingCameras.forEach(async (parkingCamera) => {
+			if (parkingCamera.camera_id && socketCameraRef.current && !socketCameraRef.current.includes(parkingCamera.camera_id)) {
+				const cameraId = parkingCamera.camera_id;
+				await socket && socket.emit('cameraStream', {
+					cameraId,
+					cmd: 'on'
+				});
+			}
+		})
+	}
+
+	const handleDisconnectSocket = async () => {
+		const socket = socketClient;
+		parkingCameras && parkingCameras.forEach(async (parkingCamera) => {
+			if (parkingCamera.camera_id) {
+				const cameraId = parkingCamera.camera_id;
+				await socket && socket.emit('cameraStream', {
+					cameraId,
+					cmd: 'off'
+				});
+			}
+		})
+		setSocketCamera([]);
+	}
+
+	useEffect(() => {
+		if (socketClient && showParkingServiceModal) {
+			handleConnectSocket();
+		} else if (socketClient && !showParkingServiceModal) {
+			handleDisconnectSocket();
+		}
+		return () => {
+			socketClient && handleDisconnectSocket();
+		}
+	}, [showParkingServiceModal])
+
+	useEffect(() => {
+		getParkingCameraList();
+	}, [parkingCameraUpdate]);
+
+	useEffect(() => {
+		socketCameraRef.current = socketCamera;
+	}, [socketCamera])
+
+	return (
+		<>
+			<Modal
+				show={showParkingServiceModal}
+				size='xl'
+				centered
+				contentClassName={styles.modal_content_observer_parkingService}
+				onHide={handleCancel}
+			>
+				<Modal.Header>
+					<Modal.Title>옵저버 주차관제시스템</Modal.Title>
+					<div >
+						<a href="!#" className={styles.setting_modal_closer} onClick={handleCancel}></a>
+					</div>
+				</Modal.Header>
+				<Modal.Body>
+					<div>
+						<Tab.Container id="left-tabs-example" defaultActiveKey="all">
+							<div className='col-12'>
+								<Button style={{ position: 'relative', left: '46.2%', marginBottom: '0.8rem' }} onClick={handleShowModalCamera}> 카메라 추가 </Button>
+								<Row className='parking-tab'>
+									<Col sm={1} className={styles.observer_parking_col_sm_1}>
+										<Nav variant="tabs" className="flex-column nav-tabs-vertical">
+											<Nav.Item>
+												<Nav.Link eventKey="all">
+													전체
+												</Nav.Link>
+											</Nav.Item>
+											{parkingCameras && parkingCameras.map((parkingCamera) => {
+												if (parkingCamera.name) {
+													return <Nav.Item key={parkingCamera.idx}>
+														<Nav.Link eventKey={parkingCamera.idx + '_camera'}>
+															{parkingCamera.name}
+														</Nav.Link>
+													</Nav.Item>
+												}
+											})}
+										</Nav>
+									</Col>
+									<Col sm={8} className={styles.observer_parking_col_sm_8}>
+										<Tab.Content className="tab-content-vertical">
+											<Tab.Pane eventKey="all">
+												<h4 className={styles.parkingCamera_title}>전체</h4>
+												<div className={styles.parkingCamera_wrapper}>
+													<ParkingCamera
+														parkingCameras={parkingCameras}
+														socketClient={socketClient}
+														socketCameraRef={socketCameraRef.current}
+														handleConnectSocket={handleConnectSocket}
+														handleDisconnectSocket={handleDisconnectSocket}
+														parkingCoordsUpdate={parkingCoordsUpdate}
+													/>
+												</div>
+											</Tab.Pane>
+
+											{parkingCameras && parkingCameras.map((parkingCamera) => {
+												return (
+													<Tab.Pane key={parkingCamera.idx} eventKey={`${parkingCamera.idx}_camera`}>
+														<h4 className={styles.parkingCamera_title}>{parkingCamera.name}</h4>
+														<ParkingCamera
+															parkingCamera={parkingCamera}
+															socketClient={socketClient}
+															socketCameraRef={socketCameraRef.current}
+															handleConnectSocket={handleConnectSocket}
+															handleDisconnectSocket={handleDisconnectSocket}
+															parkingCoordsUpdate={parkingCoordsUpdate}
+														/>
+													</Tab.Pane>
+												)
+											})
+											}
+										</Tab.Content>
+									</Col>
+
+									<Col sm={3} className={styles.observer_parking_col_sm_3}>
+										<Row style={{
+											maxWidth: '25rem',
+											backgroundColor: '#424242',
+											height: '41vh',
+											borderRadius: '1rem',
+											borderRight: 'thin solid rgb(75, 71, 71)',
+											marginBottom: '7px'
+
+										}}>
+											<Tab.Content className="tab-content-vertical">
+												<Tab.Pane eventKey="all">
+													<Tabs defaultActiveKey="status_all" id="uncontrolled-tab-example">
+														<Tab eventKey="status_all" title="실시간 주차 현황" className='test-tab'>
+															<div className={styles.info_title}>
+																{/* <h4 className={styles.parking_status}>실시간 주차 현황</h4> */}
+																	<ParkingInfo
+																		parkingCameras={parkingCameras}
+																	/>
+															</div>
+														</Tab>
+														<Tab eventKey="space-setting_all" title="주차 구역 설정" className='test-tab'>
+															<ParkingSpaceSetting
+																parkingCameras
+															/>
+														</Tab>
+													</Tabs>
+												</Tab.Pane>
+												{parkingCameras && parkingCameras.map((parkingCamera) => {
+													if (parkingCamera.name) {
+														return <Tab.Pane eventKey={parkingCamera.idx + '_camera'} key={parkingCamera.idx}>
+															<Tabs defaultActiveKey="status_detail" id="uncontrolled-tab-example">
+																<Tab eventKey="status_detail" title="실시간 주차 현황" className='test-tab'>
+																	<div className={styles.info_title}>
+																		<ParkingInfo
+																			parkingCamera={parkingCamera}
+																		/>
+
+																	</div>
+																</Tab>
+																<Tab eventKey="space-setting_detail" title="주차 구역 설정" className='test-tab'>
+																	<ParkingSpaceSetting
+																		parkingCamera
+																	/>
+																</Tab>
+															</Tabs>
+														</Tab.Pane>
+													}
+												})
+												}
+											</Tab.Content>
+										</Row>
+
+										<Row style={{
+											maxWidth: '25rem',
+											backgroundColor: '#424242',
+											height: '32vh',
+											borderRadius: '1rem',
+											borderRight: 'thin solid rgb(75, 71, 71)',
+											marginBottom: '7px',
+											marginTop: '15px'
+
+										}}>
+											<ParkingEventList
+												eventListUpdate={eventListUpdate}
+											/>
+										</Row>
+									</Col>
+								</Row>
+							</div>
+
+							{/* <div className='row'>
+								<Row className='parking-tab'>
+									<Col sm={12} className={styles.observer_parking_event_col_sm_12}>
+										<Tab.Content>
+											<Tab.Pane eventKey="vms">
+												이벤트 정보
+											</Tab.Pane>
+										</Tab.Content>
+									</Col>
+								</Row>
+							</div> */}
+						</Tab.Container>
+					</div>
+				</Modal.Body>
+			</Modal>
+			{cameraModal.show ? <AddParkingCameraModal show={cameraModal.show} setShow={setCameraModal} message={cameraModal.message} title={cameraModal.title} cameraList={parkingCameras} /> : null}
+		</>
+	)
+}

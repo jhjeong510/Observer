@@ -1,0 +1,18 @@
+.unAck_value {
+    position: relative;
+    top: 6vw;
+    right: 6vw;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.unAck_label {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    width: 3.5vw;
+}

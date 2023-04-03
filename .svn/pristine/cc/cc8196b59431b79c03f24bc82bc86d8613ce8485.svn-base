@@ -1,0 +1,9 @@
+import React from 'react';
+
+export default function ParkingSpaceSetting({ parkingCamera, parkingCameras }) {
+  if (parkingCameras) {
+    return <div>ParkingSpaceSetting All</div>;
+  } else if (parkingCamera) {
+    return <div>ParkingSpaceSetting detail</div>;
+  }
+}

@@ -1,0 +1,45 @@
+import React, { useEffect, useState, useRef } from 'react';
+import ParkingArea from './ParkingArea';
+import styles from './ParkingCameraStream.module.css';
+
+export default function ParkingCameraStream({ cameraId, socket, socketCameraRef, handleConnectSocket, handleDisconnectSocket, oneCamera, parkingCoordsData }) {
+	const isMountedRef = useRef();
+	const [receivedData, setReceivedData] = useState('');
+
+	const getCameraLiveStream = async () => {
+		if (socket && cameraId) {
+			await socket.on('cameraStream', (received) => {
+				if (received && received.cameraId === cameraId) {
+					isMountedRef.current && setReceivedData(received.data);
+				}
+			})
+		}
+	}
+
+	useEffect(() => {
+		isMountedRef.current = new Date();
+		getCameraLiveStream();
+		return () => {
+			isMountedRef.current = null;
+			console.log('unmount');
+		}
+	}, [])
+
+
+	if (cameraId) {
+		return <div>
+			<div className={styles.parentDiv}>
+				<img src={receivedData ? 'data:image/jpeg;base64,' + receivedData : require('../../assets/images/loading_rm_bg.gif')} className={receivedData !== '' && oneCamera ? styles.video : receivedData !== '' && !oneCamera ? styles.video_large : styles.loading} />
+				<div className={styles.childDiv}>
+					<ParkingArea
+						oneCamera
+						src={receivedData}
+						parkingCoordsData={parkingCoordsData}
+					/>
+				</div>
+			</div>
+		</div>
+	} else {
+		return ''
+	}
+}

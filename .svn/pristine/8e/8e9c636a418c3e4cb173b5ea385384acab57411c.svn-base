@@ -1,0 +1,184 @@
+@font-face {
+  font-family: 'KorailRoundGothicBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KorailRoundGothicBold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+.submitWarn {
+  font-size: 0.8rem;
+  display: inline-block;
+  color: #ff0000;
+  width: 63%;
+  text-align: center;
+}
+
+.displayCamera {
+  margin: 0.75rem 0rem 0.75rem 0.5rem;
+  font-family: 'KorailRoundGothicBold';
+}
+
+.type_filter {
+  display: flex;
+  justify-content: space-around;
+  margin: 0.25rem 0rem 0rem 0rem
+}
+
+.type_filter_label {
+  padding: 0.25rem 0.5rem;
+  border: 2px solid beige;
+}
+
+.setting_space_type_parent {
+  height: 30.6vh;
+}
+
+.setting_space_type {
+  display: flex;
+  height: 90%;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.setting_space_type_space {
+  width: 40%;
+  height: 90%;
+  border: 2px solid darkgray;
+}
+
+.setting_space_type_type {
+  width: 40%;
+  height: 90%;
+  border: 2px solid darkgray;
+}
+
+.unRegisteredFilter {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0.4rem 0.2rem 0.4rem 0.8rem;
+  border-bottom: 1px solid;
+  padding: 0rem 0rem 0.3rem 0rem;
+}
+
+.registeredFilter {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0.4rem 0.2rem 0.4rem 0.8rem;
+  border-bottom: 1px solid;
+  padding: 0rem 0rem 0.3rem 0rem;
+}
+
+.unregisted_label {
+  border: 2px solid darkgray;
+  padding: 0.25rem;
+  font-size: 0.8rem;
+  display: flex;
+  width: 95%;
+  justify-content: center;
+  margin: auto;
+  margin-top: 0.2rem;
+}
+
+.registed_label {
+  border: 2px solid darkgray;
+  padding: 0.25rem;
+  font-size: 0.8rem;
+  display: flex;
+  width: 95%;
+  justify-content: center;
+  margin: auto;
+  margin-top: 0.2rem;
+}
+
+.unRegisteredList {
+  list-style: none;
+  height: 16vh;
+  margin-bottom: 0;
+  margin-right: 0.3rem;
+  overflow-y: scroll;
+}
+
+.unRegisteredList::-webkit-scrollbar {
+  width: 9px;
+}
+
+.unRegisteredList::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+.unRegisteredList::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+
+.unRegisteredDetail {
+  display: flex;
+  justify-content: space-around;
+}
+
+.unRegisteredDetail_label {
+  margin-bottom: 0;
+}
+
+.registeredList {
+  list-style: none;
+  height: 16vh;
+  margin-bottom: 0;
+  margin-right: 0.3rem;
+  overflow-y: auto;
+}
+
+.registeredList::-webkit-scrollbar {
+  width: 9px;
+}
+
+.registeredList::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+.registeredList::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+
+.registeredDetail {
+  display: flex;
+  justify-content: space-around;
+}
+
+.registeredDetail_label {
+  margin-bottom: 0;
+}
+
+.display_arrow {
+  display: flex;
+  flex-direction: column;
+  font-size: x-large;
+}
+
+.btn {
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  top: -0.6rem;
+}
+
+.addBtn {
+  text-align: center;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.5rem;
+}
+
+.removeBtn {
+  text-align: center;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.5rem;
+}

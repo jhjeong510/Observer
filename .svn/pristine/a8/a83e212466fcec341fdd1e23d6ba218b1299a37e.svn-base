@@ -1,0 +1,125 @@
+import React, { useState, useEffect } from 'react';
+import { Line } from 'react-chartjs-2';
+
+export default React.memo(function CrowdDensityChart({
+    selectedCameraId,
+    crowdDensityCountingLog,
+    crowdDensityCameraId
+    // crowdDensityCameraName, 
+    // crowdDensityCameraThreshold, 
+    // crowdDensityCameraIdx 
+}) {
+
+    const [newFilteringData, setNewFilteringData] = useState([]);
+    const [chartData, setChartData] = useState({
+        labels: [''],
+        datasets: [
+            {
+                label: '측정값',
+                data: [],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.8)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                ],
+                borderWidth: 0.3,
+            },
+            {
+                label: '임계치',
+                data: [],
+                borderColor: [
+                    'white',
+                ],
+                borderWidth: 0.5,
+            }
+        ],
+    });
+    const height = '180px';
+    const width = '1100px';
+    // const chartStyle = { zIndex: '10000', height, width, marginTop:'55vh', marginLeft:'-7.6vw' };
+    const chartStyle = { zIndex: '10000', height, width };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (crowdDensityCountingLog && crowdDensityCameraId) {
+                const filterData = await crowdDensityCountingLog.filter((log) =>
+                    // log.camera_channel === crowdDensityCameraId && log.ipaddress === selectedCameraIpaddress // ==> ip가 다르고 selectredCameraId가 같은 경우 추가
+                    log.camera_channel === crowdDensityCameraId
+                );
+                setNewFilteringData(filterData);
+            }
+        };
+        fetchData();
+    }, [crowdDensityCountingLog, crowdDensityCameraId]);
+
+    useEffect(() => {
+        if (newFilteringData.length === 0) {
+            return;
+        }
+        const getCountingLog = async () => {
+            try {
+                const threshold = newFilteringData[0].threshold;
+                const maxDataLength = 60;
+                const labels = newFilteringData.map((item) => {
+                    const labelTime = item.datetime.substring(9, item.datetime.length);
+                    const timeArray = [labelTime.slice(0, 2), labelTime.slice(2, 4), labelTime.slice(4, 6)];
+                    const timeString = timeArray.join(':');
+                    return timeString;
+                }).reverse().slice(-maxDataLength);
+                const dataPoints = newFilteringData.map((item) => item.count_average).reverse().slice(-maxDataLength);
+                const thresholdData = newFilteringData.map((item) => item.threshold).slice(-maxDataLength);
+
+                const data = {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '군중감지',
+                            data: dataPoints,
+                            backgroundColor: ['rgba(255, 99, 132, 0.8)'],
+                            borderColor: ['rgba(255, 99, 132, 1)'],
+                            borderWidth: 0.3,
+                        },
+                        {
+                            label: `임계치(${threshold ? threshold : ''})`,
+                            data: thresholdData,
+                            borderColor: ['white'],
+                            borderWidth: 0.5,
+                        },
+                    ],
+                };
+                setChartData(data);
+            } catch (err) {
+                console.error('crowddensity chart component err: ', err);
+            }
+        };
+
+        getCountingLog();
+    }, [newFilteringData]);
+
+    const options = {
+        responsive: true,
+        scales: {
+            yAxes: [
+                {
+                    ticks: {
+                        min: 0,
+                    },
+                },
+            ],
+            xAxes: [
+                {
+                    ticks: {
+                        autoSkip: false,
+                    },
+                },
+            ],
+        },
+    };
+
+    return (
+        <div style={chartStyle}>
+            <Line data={chartData} options={options} height={height} width={width} />
+        </div>
+    );
+});

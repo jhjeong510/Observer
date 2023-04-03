@@ -1,0 +1,10 @@
+.visible {
+  visibility: block;
+  pointer-events: auto;
+  padding-bottom: 0.5rem;
+}
+
+.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}

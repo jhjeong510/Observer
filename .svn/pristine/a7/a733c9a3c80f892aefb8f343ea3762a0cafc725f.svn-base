@@ -1,0 +1,75 @@
+@font-face {
+  font-family: 'KimjungchulMyungjo-Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulMyungjo-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+.signBtn {
+  /* color: #eae7e7;
+  text-shadow: 1px 1px black;
+  font-weight: 700;
+  background: linear-gradient(129deg, #343434 30%, #7B7B7C, #3d3d3d);
+  border: 1px solid #7d7c7c;
+  width: 100%;
+  padding: 0.5rem; */
+  color: #eae7e7;
+  text-shadow: 2px 2px black;
+  font-weight: 700;
+  background: linear-gradient(129deg, #075a00 30%, #118b03, #001801);
+  border: 1px solid #033900;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 6px;
+  width: 13rem;
+  height: 3rem;
+  font-family: 'KimjungchulMyungjo-Bold';
+  margin-left: 12vh;
+  margin-top: 3vh;
+}
+
+.signBtn:hover {
+  /* box-shadow: 0px 0px 2px 2.2px #a4b9c5;
+  border: 1.5px solid #1e262a;
+  color: black; */
+  box-shadow: 0px 0px 2px 2.2px #0a4800;
+  border: 1.5px solid #1e262a;
+  color: #f6f6f6;
+}
+
+.signBtn:active{
+  box-shadow: 0px 0px 2.2px #545454;
+  border: 1.5px solid #1e262a;
+  color: rgb(114 111 111);
+  background: linear-gradient(129deg, #1c1b1b 30%, #434343, #111111);
+}
+
+h6.font_weight_light{
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: -1rem;
+  font-family: 'KimjungchulMyungjo-Bold';
+  color: #a0a0a0;
+}
+
+.loginTitle{
+  display: flex;
+  justify-content: center;
+  font-family: 'KimjungchulMyungjo-Bold';
+  align-items: center;
+}
+
+.loginTitle_GIT{
+  margin-right: 1rem;
+  margin-left: 1rem;
+  font-size: 2.5rem;
+  color: #147a14;
+  text-shadow: 1px 1px 2px #39c360;
+}
+
+.loginTitle_Observer{
+  font-size: 2.3rem;
+  text-shadow: 2px 2px 1px #4c4c4c;
+  color: white;
+}

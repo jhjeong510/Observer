@@ -1,0 +1,54 @@
+import React, { useState, useEffect } from 'react';
+import styles from './VCounterInfo.module.css';
+import VCounterInfoSetting from './VCounterInfoSetting';
+
+export default function VCounterInfo({ vCounters }) {
+
+  const [vCounterInfo, setVCounterInfo] = useState({
+    empty_slots: '',
+    in_count: '',
+    out_count: '',
+  });
+
+  useEffect(() => {
+    vCounters && setVCounterStatus(vCounters);
+  }, [vCounters])
+
+  const setVCounterStatus = (vCountersValue) => {
+    if (vCounterInfo.length > 1) {
+      return setVCounterInfo({
+        empty_slots: vCountersValue.map(vCounter => vCounter.empty_slots).reduce((prev, curr) => (prev + curr), 0),
+        in_count: vCountersValue.map(vCounter => vCounter.in_count).reduce((prev, curr) => (prev + curr), 0),
+        out_count: vCountersValue.map(vCounter => vCounter.out_count).reduce((prev, curr) => (prev + curr), 0)
+      })
+    } else if (vCountersValue.length === 1) {
+      return setVCounterInfo({
+        empty_slots: vCountersValue[0].empty_slots,
+        in_count: vCountersValue[0].in_count,
+        out_count: vCountersValue[0].out_count
+      })
+    }
+  }
+
+  if (vCounters && vCounterInfo) {
+    return (
+      <>
+        <span className={styles.status}>
+          <div className={styles.location}>
+            <span>주차 가능 공간 : {vCounterInfo.empty_slots}</span>
+            <span>입차 : {vCounterInfo.in_count}</span>
+            <span>출차 : {vCounterInfo.out_count}</span>
+            <span className={styles.edit}>
+              <i className="fa fa-edit"></i>
+            </span>
+          </div>
+        </span>
+        <VCounterInfoSetting
+
+        />
+      </>
+    )
+  } else {
+    return ''
+  }
+}

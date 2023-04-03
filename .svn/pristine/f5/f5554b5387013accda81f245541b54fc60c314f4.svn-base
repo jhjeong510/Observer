@@ -1,0 +1,75 @@
+.deviceList {
+  height: 43vh;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  min-height: 41px;
+  max-height: 809px;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1.5px solid #d8d8d8;
+  box-shadow: 4px 4px 14px 3.5px black;}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  /* height: 4.128vh; */
+  height: 3.7vh;
+  background: linear-gradient(147deg,#000000,#3e3e3e);
+  border-radius: 20px 20px 0px 0px;
+}
+
+.title {
+  padding: 0.65rem 0.5rem 0.6rem 0.7rem;
+  width: 100%;
+  height: 2.5rem;
+  font-size: 1rem;
+
+  margin-left: 6px;
+}
+
+.deviceTree {
+  width: 97%;
+  height: 88%;
+  margin: 0.5rem;
+  padding-top: 0.3rem;
+  padding-left: 0.3rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 37.5vh;
+  background-color: #00000099;
+  border-radius: 18px;
+}
+
+.deviceTree::-webkit-scrollbar {
+  width: 13px;
+}
+
+.deviceTree::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+.deviceTree::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+
+.handleDisplayMenu {
+  display: flex;
+  cursor: pointer;
+  
+}
+
+.handleSettingComponent {
+  display: flex;
+  align-items: center;
+  border: none;
+}
+
+.handleSettingComponent:hover,
+.handleSettingComponent:active {
+  background: rgba(54, 71, 58, 0.67);
+}
