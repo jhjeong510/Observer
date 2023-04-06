@@ -96,8 +96,8 @@ export default function AddIconToMap(canvas, buildingList, cameraList, deviceLis
 		})
 	}
 	if (canvas && cameraList && cameraList.length > 0) {
-		const removedCameraObjs = canvas.getObjects().filter((objDetail) => objDetail.data.type === 'camera').filter((cameraObj) => !cameraList.some((cameraDetail) => ((cameraDetail.ipaddress === cameraObj.data.ipaddress) && (cameraDetail.id === cameraObj.data.camera_id))))
-		if (removedCameraObjs && removedCameraObjs.length > 0) {
+		const removedCameraObjs = canvas.getObjects().filter((objDetail) => objDetail.data.type === 'camera').filter((cameraObj) => cameraList.find((cameraDetail) => ((cameraDetail.ipaddress === cameraObj.data.ipaddress) && (cameraDetail.cameraid === cameraObj.data.camera_id) && (cameraDetail.top_location === '') && (cameraDetail.left_location === ''))))
+		if (removedCameraObjs && removedCameraObjs.length === 1) {
 			canvas.remove(removedCameraObjs[0]);
 		}
 		cameraList.some(function (camera, index) {

@@ -4,7 +4,7 @@ import AllEvent from './AllEvent';
 import AccessCtlLog from './AccessCtllog';
 import AnprLog from './AnprLog';
 import ParkingControlLog from './ParkingControlLog';
-import { VcounterLog } from './VcounterLog';
+// import { VcounterLog } from './VcounterLog';
 
 class Inquiry extends Component {
 
@@ -57,18 +57,18 @@ class Inquiry extends Component {
 										<ParkingControlLog
 											parkingCameraUpdate={this.props.parkingCameraUpdate}
 											parkingAreaUpdate={this.props.parkingAreaUpdate}
-											parkingCoordsUpdate={this.props.parkingCoordsUpdate}
+											parkingSpaceUpdate={this.props.parkingSpaceUpdate}
 										/>
 									</Tab>
 							}
-							{
+							{/* {
 								this.props.handleEnableServiceType('parkingcontrol') &&
 									<Tab eventKey="vCounterLog" title="VCounter 로그">
 										<VcounterLog
 										
 										/>
 									</Tab>
-							}
+							} */}
 							{
 								this.props.serviceTypes && this.props.serviceTypes.find((serviceType) => serviceType.name === 'anpr' && serviceType.setting_value === 'true')?
 									<Tab eventKey="anprLog" title="ANPR 차량번호판 인식">

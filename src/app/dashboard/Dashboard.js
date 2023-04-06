@@ -868,6 +868,7 @@ export class Dashboard extends Component {
           handleEnableServiceType={this.props.handleEnableServiceType}
           parkingCameraUpdate={this.state.parkingCameraUpdate}
           parkingAreaUpdate={this.state.parkingAreaUpdate}
+          parkingSpaceUpdate={this.state.parkingSpaceUpdate}
           parkingCoordsUpdate={this.state.parkingCoordsUpdate}
         />
         {this.state.eventDetail && this.state.eventDetail !== {} && 

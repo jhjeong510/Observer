@@ -14,10 +14,10 @@ var observerRouter = require('./routes/observerRouter');
 
 const dbmanager = require('./db/dbManager');
 
-// require('./worker/dbPolling').startDbPolling();
+require('./worker/dbPolling').startDbPolling();
 require('./worker/dbPolling').parkingRedZoneCheck();
 // require('./worker/dbPolling').crowdDensityLogPolling();
-// require('./worker/devicePolling').startDevicePolling();
+require('./worker/devicePolling').startDevicePolling();
 // require('./worker/breathDataManage').ManageBreathLog();
 // require('./worker/ebellSocketClient').connectEbellServer();
 //타워램프 사용시 아래 내용 주석해제

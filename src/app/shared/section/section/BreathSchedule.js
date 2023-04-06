@@ -515,7 +515,7 @@ class BreathSchedule extends Component {
                   }
                 </div>
                 <div className='row' style={{ height: '0px' }}>
-                  <Form.Text style={{ color: 'red', width: '400px', marginLeft: '62px', textAlign: 'center', position: 'fixed', top: '404px', right: '130px' }}>{this.state.modalGroupWarn}</Form.Text>
+                  <Form.Text style={{ color: 'red', width: '400px', marginLeft: '62px', textAlign: 'center', position: 'fixed', top: '45.7vh', right: '21.9vw' }}>{this.state.modalGroupWarn}</Form.Text>
                 </div>
                 <div className='row'>
                   <div className='col-12'>

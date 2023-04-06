@@ -53,7 +53,8 @@ export default function ParkingArea({ parkingCoordsData, parkingSpaceUpdate, one
 
 					ctx.fillStyle = 'black';
 					ctx.font = "bold 15px Arial";
-					ctx.fillText(coord.index_number, coord.x1 / parkingCameraWidth * widthHeight.width + ((coord.x2 / parkingCameraWidth * widthHeight.width - coord.x1 / parkingCameraWidth * widthHeight.width) / 2), coord.y1 / parkingCameraHeight * widthHeight.height + ((coord.y2 / parkingCameraHeight * widthHeight.height - coord.y1 / parkingCameraHeight * widthHeight.height) / 2));
+					ctx.fillText(coord.index_number, coord.x1 / parkingCameraWidth * widthHeight.width + ((coord.x2 / parkingCameraWidth * widthHeight.width - coord.x1 / parkingCameraWidth * widthHeight.width) / 2), coord.y1 / parkingCameraHeight * widthHeight.height + ((coord.y4 / parkingCameraHeight * widthHeight.height - coord.y1 / parkingCameraHeight * widthHeight.height) / 2));
+
 					if (coord.index_number === '1') {
 						ctx.fillText(coord.parking_area, coord.x1 / parkingCameraWidth * widthHeight.width + ((coord.x2 / parkingCameraWidth * widthHeight.width - coord.x1 / parkingCameraWidth * widthHeight.width) / 2), coord.y1 / parkingCameraHeight * widthHeight.height + ((coord.y2 / parkingCameraHeight * widthHeight.height - coord.y1 / parkingCameraHeight * widthHeight.height) / 2) + 15);
 					}

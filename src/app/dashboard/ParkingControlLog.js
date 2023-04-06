@@ -277,12 +277,14 @@ export class ParkingControlLog extends Component {
 				this.readParkingAreas();
 			}
 		}
-		if(prevProps.parkingSpaceUpdate !== this.props.parkingSpaceUpdate){
-			if(this.props.parkingSpaceUpdate){
+		if(prevProps.parkingSpaceUpdate !== (this.props.parkingSpaceUpdate && this.props.parkingSpaceUpdate)){
+			if(this.state.camera_ip && this.state.area){
+				this.readParkingSpaces(this.state.camera_ip, this.state.area)
+			} else {
 				this.readParkingSpaces();
 			}
 		}
-  }
+	}
 
   render() {
 
